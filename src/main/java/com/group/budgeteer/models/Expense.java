@@ -1,10 +1,9 @@
 package com.group.budgeteer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -42,4 +41,17 @@ public class Expense extends ApplicationEntity<Expense> {
     @NotNull(message = "Expense price cannot be blank")
     @Min(0)
     private double price;
+
+    /**
+     * Join the Expense model to the User model
+     */
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+//    @ManyToOne
+//    @JsonIgnore
+//    @JoinColumn(name = "budgets_id", nullable = false)
+//    private Budget budget;
 }
