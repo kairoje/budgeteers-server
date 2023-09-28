@@ -11,4 +11,15 @@ import java.util.UUID;
 @MappedSuperclass
 public class ApplicationEntity <T> {
     private UUID id;
+
+    public ApplicationEntity() {
+    }
+
+    public ApplicationEntity(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
+    }
 }
