@@ -16,7 +16,7 @@ public class ExpenseService extends ApplicationService{
     private final ExpenseRepository expenseRepository;
 
     /**
-     * Injects the provided ExpenseRepository
+     * Injects the ExpenseRepository
      * for managing and accessing expense-related data
      * @param expenseRepository Is used by the ExpenseService
      */
