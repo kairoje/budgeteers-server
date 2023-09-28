@@ -38,6 +38,10 @@ public class Budget extends ApplicationEntity<Budget> {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    /**
+     * The list of expenses associated with this budget.
+     * Expenses are removed when the budget is removed (orphanRemoval).
+     */
     @OneToMany(mappedBy = "expense", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Expense> expenses;
