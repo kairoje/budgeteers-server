@@ -34,6 +34,9 @@ public class Budget extends ApplicationEntity<Budget> {
     @NotBlank(message = "Date can not be empty")
     private LocalDate date;
 
+    /**
+     * The user associated with this budget.
+     */
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
