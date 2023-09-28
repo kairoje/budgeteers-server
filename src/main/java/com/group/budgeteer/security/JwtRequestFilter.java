@@ -27,11 +27,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     private JWTUtils jwtUtils;
 
+    /**
+     * Sets auth user details service
+     * @param authUserDetailsService Auth user details service
+     */
     @Autowired
     public void setAuthUserDetailsService(AuthUserDetailsService authUserDetailsService) {
         this.authUserDetailsService = authUserDetailsService;
     }
 
+    /**
+     * Sets Jwt Utils
+     * @param jwtUtils This is the jwtUtils
+     */
     @Autowired
     public void setJwtUtils(JWTUtils jwtUtils) {
         this.jwtUtils = jwtUtils;
