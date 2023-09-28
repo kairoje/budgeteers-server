@@ -1,6 +1,6 @@
 # Description
 
-Budgeteer is a budget app designed to allow people to take control of their finances. With Budgeteer, users can create custom budget categories and add items to these categories, allowing them to  monitor their income, expenses, and financial goals.
+Budgeteer is a budget app designed to allow people to take control of their finances. With Budgeteer, users can create custom budget categories and add expenses to these categories, allowing them to  monitor their income, expenses, and financial goals.
 
 # User Stories
 
@@ -30,52 +30,52 @@ Budgeteer is a budget app designed to allow people to take control of their fina
 **As a user**, I want to view the details of a specific budget category.
 
 **Acceptance Criteria:**
-- Users can click on a category to view its details, including its name and associated items.
+- Users can click on a category to view its details, including its name and associated expenses.
 - Users are presented with an error message if the category does not exist.
 
 **As a user**, I want to see a list of all my budget categories for an overview.
 
 **Acceptance Criteria:**
 - Users can access a list of all their budget categories.
-- The list displays category names and, if available, the number of associated items.
+- The list displays category names and, if available, the number of associated expenses.
 
 **As a user**, I want the option to delete a budget category that I no longer need.
 
 **Acceptance Criteria:**
 - Users can delete a budget category.
-- Deletion of a category should not affect associated items.
+- Deletion of a category should not affect associated expenses.
 
-## Managing Items
+## Managing expenses
 
-**As a user**, I want to add a budget item to a specific category to track my expenses accurately.
-
-**Acceptance Criteria:**
-- Users can add a budget item to a category by providing item details such as name, amount, and description.
-- Users receive a confirmation message upon successful item addition.
-
-**As a user**, I want the ability to update a budget item's details to ensure they are current.
+**As a user**, I want to add a budget expense to a specific category to track my expenses accurately.
 
 **Acceptance Criteria:**
-- Users can edit a budget item's name, amount, or description.
-- Changes to an item's name should not conflict with existing item names within the same category.
+- Users can add a budget expense to a category by providing expense details such as name, amount, and description.
+- Users receive a confirmation message upon successful expense addition.
 
-**As a user**, I want to view the details of a specific budget item to track its information.
-
-**Acceptance Criteria:**
-- Users can click on an item to view its details, including name, amount, and description.
-- Users are presented with an error message if the item does not exist.
-
-**As a user**, I want to see a list of all budget items within a specific category.
+**As a user**, I want the ability to update a budget expense's details to ensure they are current.
 
 **Acceptance Criteria:**
-- Users can access a list of all budget items within a category.
-- The list displays item names, amounts, and descriptions, if available.
+- Users can edit a budget expense's name, amount, or description.
+- Changes to an expense's name should not conflict with existing expense names within the same category.
 
-**As a user**, I want the option to delete a budget item when it's no longer relevant.
+**As a user**, I want to view the details of a specific budget expense to track its information.
 
 **Acceptance Criteria:**
-- Users can delete a budget item.
-- Deletion of an item should not affect the category or other associated items.
+- Users can click on an expense to view its details, including name, amount, and description.
+- Users are presented with an error message if the expense does not exist.
+
+**As a user**, I want to see a list of all budget expenses within a specific category.
+
+**Acceptance Criteria:**
+- Users can access a list of all budget expenses within a category.
+- The list displays expense names, amounts, and descriptions, if available.
+
+**As a user**, I want the option to delete a budget expense when it's no longer relevant.
+
+**Acceptance Criteria:**
+- Users can delete a budget expense.
+- Deletion of an expense should not affect the category or other associated expenses.
 
 # Budgeteer ERD
 ![ERD.png](ERD.png)
