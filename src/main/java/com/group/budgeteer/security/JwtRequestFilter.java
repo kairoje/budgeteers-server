@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+/**
+ * The JwtRequestFilter class validates the JWT token.
+ */
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
     Logger logger = Logger.getLogger(JwtRequestFilter.class.getName());
@@ -24,12 +27,25 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final JWTUtils jwtUtils;
 
+    /**
+     * The constructor for JwtRequestFilter
+     * @param authUserDetailsService This injects authUserDetailsService into JwtRequestFilter class
+     * @param jwtUtils This injects jwtUtil into JwtRequestFilter class
+     */
     @Autowired
     public JwtRequestFilter(AuthUserDetailsService authUserDetailsService, JWTUtils jwtUtils){
         this.authUserDetailsService = authUserDetailsService;
         this.jwtUtils = jwtUtils;
     }
 
+    /**
+     * doFilterInternal filters incoming Http request, validates the JWT token, and sets the users authentication details
+     * @param request This is the HttpServletRequest to filter.
+     * @param response This is the HttpServletResponse.
+     * @param filterChain The filter chain to continue processing requests.
+     * @throws ServletException If an error occurs during processing
+     * @throws IOException If an I/O error occurs
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try{
@@ -48,6 +64,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * parseJwt parses JWT token from the request header.
+     * @param request HttpServletRequest containing the Authorization Header.
+     * @return The JWT token if found in the authorization header, or null if not found.
+     */
     public String parseJwt(HttpServletRequest request){
         String authHeader = request.getHeader("Authorization");
 
