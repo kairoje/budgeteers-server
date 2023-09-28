@@ -8,6 +8,9 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The JWTUtils class provides utility methods for handling JSON Web Tokens in the application.
+ */
 @Service
 public class JWTUtils {
     Logger logger = Logger.getLogger(JWTUtils.class.getName());
@@ -18,6 +21,11 @@ public class JWTUtils {
     @Value("${jwt-expiration-ms}")
     private int jwtExpirationMs;
 
+    /**
+     * Generates a Jwt Token for the given authenticated user.
+     * @param authUserDetails The authenticated user for whom the token is generated.
+     * @return The generated JWT token.
+     */
     public String generateJwtToken(AuthUserDetails authUserDetails) {
         return Jwts.builder()
                 .setSubject(authUserDetails.getUsername())
@@ -27,6 +35,11 @@ public class JWTUtils {
                 .compact();
     }
 
+    /**
+     * Retrieves the username(email) from a JWT token.
+     * @param token The Jwt token from which to extract the username(email).
+     * @return The username(email) extracted from the token.
+     */
     public String getUsernameFromJwt(String token){
         return Jwts.parserBuilder()
                 .setSigningKey(jwtSecret)
@@ -35,6 +48,11 @@ public class JWTUtils {
                 .getBody().getSubject();
     }
 
+    /**
+     * Validates a Jwt token for its integrity and expiration.
+     * @param token The Jwt token to validate.
+     * @return True if the token is valide, otherwise False.
+     */
     public boolean validateJwt(String token){
         try{
             Jwts.parser().setSigningKey(jwtSecret)
