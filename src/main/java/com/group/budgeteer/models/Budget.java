@@ -2,12 +2,15 @@ package com.group.budgeteer.models;
 
 
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Getter
@@ -31,4 +34,8 @@ public class Budget extends ApplicationEntity<Budget>{
     @ManyToOne
     @JoinColumn(name="user_id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "expense", orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Expense> expenses;
 }
