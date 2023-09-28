@@ -12,4 +12,7 @@ public class SecurityConfiguration {
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public JwtRequestFilter authJwtRequestFilter(){return new JwtRequestFilter();}
 }
