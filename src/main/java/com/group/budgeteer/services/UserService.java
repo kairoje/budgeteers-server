@@ -31,9 +31,9 @@ public class UserService extends ApplicationService{
     }
 
     public String create(User userObject){
-        User user = userRepository.findByEmail(userObject.getEmail()).orElseThrow();
+        boolean exists = userRepository.existsByEmail(userObject.getEmail());
 
-        if (user != null){
+        if (exists){
             throw new UserAlreadyExistsException("User with email " + userObject.getEmail() + " already exists.");
         }
 
