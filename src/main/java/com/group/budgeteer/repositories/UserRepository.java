@@ -6,7 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+/**
+ * The User Repository interface is responsible for defining database operations
+ * for the User Entity, such as CRUD (CREATE, READ, UPDATE, DELETE) operations.
+ */
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
-    public boolean existsByEmail(String email);
+    boolean existsByEmail(String email);
 }
