@@ -1,5 +1,6 @@
 package com.group.budgeteer.services;
 
+import com.group.budgeteer.exceptions.UserAlreadyExistsException;
 import com.group.budgeteer.models.User;
 import com.group.budgeteer.repositories.UserRepository;
 import com.group.budgeteer.security.AuthUserDetails;
