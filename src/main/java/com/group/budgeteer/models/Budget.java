@@ -3,9 +3,7 @@ package com.group.budgeteer.models;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -29,4 +27,8 @@ public class Budget extends ApplicationEntity<Budget>{
     @Column(nullable = false)
     @NotBlank(message = "Date can not empty")
     private LocalDate date;
+
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable = false)
+    private User user;
 }
