@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.logging.Logger;
-
+//TODO add docstrings
 @Service
 public class UserService extends ApplicationService{
     Logger logger = Logger.getLogger(UserService.class.getName());

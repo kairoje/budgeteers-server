@@ -2,6 +2,7 @@ package com.group.budgeteer.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
+//TODO add docstrings
 
 @ResponseStatus(HttpStatus.CONFLICT)
 public class UserAlreadyExistsException extends RuntimeException {
