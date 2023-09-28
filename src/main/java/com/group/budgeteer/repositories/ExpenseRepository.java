@@ -6,6 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+/**
+ * The Expense Repository interface is responsible for defining database operations
+ * for the Expense Entity, such as CRUD operations.
+ */
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, UUID> {
 }
