@@ -29,4 +29,10 @@ public class UserController {
         return ResponseEntity
                 .ok(new APIResponse<>(userService.create(userObject), "success"));
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<APIResponse<User>> login(@RequestBody User userObject){
+        return ResponseEntity
+                .ok(new APIResponse<>(userService.login(userObject), "success"));
+    }
 }

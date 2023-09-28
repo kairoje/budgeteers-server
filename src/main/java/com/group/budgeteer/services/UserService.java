@@ -50,7 +50,7 @@ public class UserService extends ApplicationService{
         return jwt;
     }
 
-    public User login(User payload, HttpServletResponse response) {
+    public User login(User payload) {
         UsernamePasswordAuthenticationToken authenticationToken = new
                 UsernamePasswordAuthenticationToken(payload.getEmail(), payload.getPassword());
         try {
