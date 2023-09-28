@@ -1,4 +1,4 @@
-package com.group.budgeteer.model;
+package com.group.budgeteer.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
