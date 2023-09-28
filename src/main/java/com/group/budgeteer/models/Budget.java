@@ -25,6 +25,9 @@ import java.util.List;
 @Table(name = "budgets")
 public class Budget extends ApplicationEntity<Budget> {
 
+    /**
+     * The balance of the budget. It must be greater than 0.
+     */
     @Column(nullable = false)
     @NotNull(message = "Balance can not be empty")
     @Positive(message = "Balance must be greater than 0")
