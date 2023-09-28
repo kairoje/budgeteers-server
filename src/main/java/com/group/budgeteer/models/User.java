@@ -10,8 +10,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 /**
- * The user class represents a user entity in the application.
- * It extends the application entity class to inherit common fields and functionality.
+ * The User class represents a User Entity in the application.
+ * It extends the ApplicationEntity class to inherit common fields and functionality.
  */
 @Entity
 @Table(name = "users")
