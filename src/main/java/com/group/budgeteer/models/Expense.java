@@ -39,7 +39,7 @@ public class Expense extends ApplicationEntity<Expense> {
      */
     @Column
     @NotNull(message = "Expense price cannot be blank")
-    @Min(0)
+    @Min(1)
     private double price;
 
     /**
