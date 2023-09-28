@@ -13,6 +13,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 
+/**
+ * Represents a budget entity in the application.
+ */
 @Getter
 @Setter
 @ToString
@@ -20,22 +23,23 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "budgets")
-public class Budget extends ApplicationEntity<Budget>{
+public class Budget extends ApplicationEntity<Budget> {
 
     @Column(nullable = false)
-    @NotNull(message = "Balance can not empty")
+    @NotNull(message = "Balance can not be empty")
     @Positive(message = "Balance must be greater than 0")
     private Double balance;
 
     @Column(nullable = false)
-    @NotBlank(message = "Date can not empty")
+    @NotBlank(message = "Date can not be empty")
     private LocalDate date;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "expense", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Expense> expenses;
 }
+
