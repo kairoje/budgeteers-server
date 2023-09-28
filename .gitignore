@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Julian Properties ###
+src/main/resources/application-julian.properties
