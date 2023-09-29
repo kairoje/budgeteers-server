@@ -50,6 +50,14 @@ public class Expense extends ApplicationEntity<Expense> {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Override
+    public Expense update(Expense payload) {
+      setName(payload.getName());
+      setPrice(payload.getPrice());
+      setDescription(payload.getDescription());
+      return this;
+    }
+
     /**
      * Join the Expense model to the Budgets model.
      */

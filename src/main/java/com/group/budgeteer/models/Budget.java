@@ -56,5 +56,12 @@ public class Budget extends ApplicationEntity<Budget> {
     @OneToMany(mappedBy = "expense", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Expense> expenses;
+
+    @Override
+   public Budget update(Budget payload) {
+        setBalance(payload.getBalance());
+        setDate(payload.getDate());
+        return this;
+    }
 }
 

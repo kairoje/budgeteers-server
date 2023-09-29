@@ -18,9 +18,9 @@ import java.util.logging.Logger;
 @Service
 public class BudgetService extends ApplicationService {
 
-    private BudgetRepository budgetRepository;
+    private final BudgetRepository budgetRepository;
 
-    private ExpenseRepository expenseRepository;
+    private final ExpenseRepository expenseRepository;
 
     Logger logger = Logger.getLogger(BudgetService.class.getName()); //log messages related to the class
 
@@ -37,5 +37,12 @@ public class BudgetService extends ApplicationService {
 
     public Budget createBudget(Budget budgetObject) { return budgetRepository.save(budgetObject); }
 
+    public Budget updateBudget(Budget budgetObject) {
+        Budget budget = budgetRepository.findById(budgetObject.getId()).orElseThrow();
+        return budgetRepository.save(budget.update(budgetObject));
+    }
 
+    public void deleteBudget(UUID budgetId) {
+         budgetRepository.deleteById(budgetId);
+    }
 }
