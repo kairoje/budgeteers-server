@@ -42,7 +42,7 @@ public class BudgetService extends ApplicationService {
     }
 
     public Optional<Budget> getBudget(budgetId) { //id being generated from uuid
-        Budget budget = budgetRepository.findByIdAndUserId(budgetId, BudgetService.getCurrentLoggedInUser().getId());
+        Budget budget = budgetRepository.findById(budgetId, BudgetService.getCurrentLoggedInUser().getId());
         if (budget == null) {
             throw new RuntimeException("Budget with " + budgetId + " not found");
         } else {
