@@ -43,6 +43,8 @@ public class ExpenseService extends ApplicationService{
         Budget budget = budgetRepository.findById(budgetId).orElseThrow();
         expenseObject.setBudget(budget);
         expenseObject.setUser(currentUser());
+        budget.setBalance(budget.getBalance() - expenseObject.getPrice()); //TODO add validation for if balance is under $0
+        budgetRepository.save(budget);
         return expenseRepository.save(expenseObject);
 
 //        Budget budget = budgetRepository.findByIdAndUserId(budgetId, currentUser().getId());
