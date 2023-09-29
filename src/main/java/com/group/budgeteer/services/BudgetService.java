@@ -18,9 +18,9 @@ import java.util.logging.Logger;
 @Service
 public class BudgetService extends ApplicationService {
 
-    private BudgetRepository budgetRepository;
+    private final BudgetRepository budgetRepository;
 
-    private ExpenseRepository expenseRepository;
+    private final ExpenseRepository expenseRepository;
 
     Logger logger = Logger.getLogger(BudgetService.class.getName()); //log messages related to the class
 
@@ -36,6 +36,5 @@ public class BudgetService extends ApplicationService {
     public Budget getBudget(UUID budgetId) { return budgetRepository.findById(budgetId).orElseThrow(() -> new RuntimeException("Budget with " + budgetId + " not found")); }
 
     public Budget createBudget(Budget budgetObject) { return budgetRepository.save(budgetObject); }
-
 
 }

@@ -2,12 +2,16 @@ package com.group.budgeteer.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * The User class represents a User Entity in the application.
@@ -48,4 +52,13 @@ public class User extends ApplicationEntity<User> {
     @JsonProperty (access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank(message = "Password cannot be blank")
     private String password;
+
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Budget> budgets;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Expense> expenses;
 }
