@@ -53,7 +53,7 @@ public class Budget extends ApplicationEntity<Budget> {
      * The list of expenses associated with this budget.
      * Expenses are removed when the budget is removed (orphanRemoval).
      */
-    @OneToMany(mappedBy = "expense", orphanRemoval = true)
+    @OneToMany(mappedBy = "budget", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Expense> expenses;
 
