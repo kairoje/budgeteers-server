@@ -43,15 +43,18 @@ public class Expense extends ApplicationEntity<Expense> {
     private double price;
 
     /**
-     * Join the Expense model to the User model
+     * Join the Expense model to the User model.
      */
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-//    @ManyToOne
-//    @JsonIgnore
-//    @JoinColumn(name = "budgets_id", nullable = false)
-//    private Budget budget;
+    /**
+     * Join the Expense model to the Budgets model.
+     */
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "budgets_id", nullable = false)
+    private Budget budget;
 }

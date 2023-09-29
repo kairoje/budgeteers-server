@@ -1,10 +1,11 @@
 package com.group.budgeteer.controllers;
 
+import com.group.budgeteer.models.Expense;
 import com.group.budgeteer.services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
 import java.util.logging.Logger;
 
 /**
@@ -26,4 +27,12 @@ public class ExpenseController {
     public ExpenseController(ExpenseService expenseService) {
         this.expenseService = expenseService;
     }
+
+    //POST/CREATE
+    @PostMapping(path = "/api/v1/budgets/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/{budgetId}/expenses
+    public Expense createExpense(@PathVariable(value = "budgetId") UUID budgetId, @RequestBody Expense expenseObject) throws Exception {
+        return expenseService.createExpense(budgetId, expenseObject);
+    }
 }
+
+//TODO add docstring
