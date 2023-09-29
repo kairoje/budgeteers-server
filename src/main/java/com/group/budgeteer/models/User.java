@@ -61,4 +61,12 @@ public class User extends ApplicationEntity<User> {
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Expense> expenses;
+
+    @Override
+   public User update(User payload) {
+        setEmail(payload.getEmail());
+        setFirstName(payload.getFirstName());
+        setLastName(payload.getLastName());
+        return this;
+    }
 }
