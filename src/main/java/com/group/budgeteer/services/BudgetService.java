@@ -18,12 +18,8 @@ public class BudgetService {
     Logger logger = Logger.getLogger(BudgetService.class.getName()); //log messages related to the class
 
     @Autowired
-    public void setBudgetRepository(BudgetRepository budgetRepository) {
+    public BudgetService(BudgetRepository budgetRepository, ExpenseRepository expenseRepository) {
         this.budgetRepository = budgetRepository;
-    }
-
-    @Autowired
-    public void setExpenseRepository(ExpenseRepository expenseRepository) {
         this.expenseRepository = expenseRepository;
     }
 
@@ -31,6 +27,15 @@ public class BudgetService {
     public static User getCurrentLoggedInUser(){
         AuthUserDetails authUserDetails = (AuthUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return authUserDetails.getUser();
+    }
+
+    public List<Budget> getBudgets() {
+        List<Budget> budgets = budgetRepository.findByUserId(BudgetService.getCurrentLoggedInUser().getId());
+        if (budgets.isEmpty()) {
+            throw new RuntimeException("No budgets available to display");
+        } else {
+            return budgets;
+        }
     }
 
 }
