@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -44,9 +45,7 @@ public class ExpenseService extends ApplicationService{
     public Expense getExpense(UUID budgetId, UUID expenseId){
         Budget budget = budgetRepository.findById(budgetId).orElseThrow();
 
-        if (budget != null) {
-            return  expenseRepository.findById(expenseId).orElseThrow();
-        }
+        return  expenseRepository.findById(expenseId).orElseThrow();
     }
 
     //POST/CREATE
