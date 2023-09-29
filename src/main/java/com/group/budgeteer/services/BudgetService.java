@@ -37,4 +37,10 @@ public class BudgetService extends ApplicationService {
 
     public Budget createBudget(Budget budgetObject) { return budgetRepository.save(budgetObject); }
 
+    public Budget updateBudget(Budget budgetObject) {
+        Budget budget = budgetRepository.findById(budgetObject.getId()).orElseThrow();
+        return budgetRepository.save(budget.update(budgetObject));
+    }
+
+
 }

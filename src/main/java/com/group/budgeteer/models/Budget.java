@@ -58,7 +58,7 @@ public class Budget extends ApplicationEntity<Budget> {
     private List<Expense> expenses;
 
     @Override
-    Budget update(Budget payload) {
+   public Budget update(Budget payload) {
         setBalance(payload.getBalance());
         setDate(payload.getDate());
         return this;
