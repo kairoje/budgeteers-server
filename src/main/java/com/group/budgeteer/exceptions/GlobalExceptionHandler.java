@@ -25,10 +25,11 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class})
-    public ResponseEntity<APIResponse<String>> handleBadRequest(Exception ex){
+    @ExceptionHandler({HttpMessageNotReadableException.class})
+    public ResponseEntity<APIResponse<String>> handleHttpMessageNotReadableExceptions(HttpMessageNotReadableException ex){
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new APIResponse<>(ex.getMessage(), "error"));
     }
+
 }
