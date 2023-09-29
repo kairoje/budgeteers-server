@@ -47,10 +47,10 @@ public class ExpenseController {
         return expenseService.createExpense(budgetId, expenseObject);
     }
 
-//    @PutMapping(path = "/api/v1/budgets/{budgetId}/expenses/{expenseId}")
-//    public Expense updateExpense(@PathVariable String budgetId, @PathVariable String expenseId, Expense expenseObject){
-//        return expenseService.updateExpense(budgetId, expenseId, expenseObject);
-//    }
+    @PutMapping(path = "/api/v1/budgets/{budgetId}/expenses/{expenseId}")
+    public Expense updateExpense(@PathVariable UUID budgetId, @PathVariable UUID expenseId, Expense expenseObject){
+        return expenseService.updateExpense(budgetId, expenseId, expenseObject);
+    }
 }
 
 //TODO add docstring

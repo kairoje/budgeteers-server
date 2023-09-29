@@ -50,8 +50,11 @@ public class ExpenseService extends ApplicationService {
     }
 
     //POST/CREATE
+    //TODO Refactor as necessary
     public Expense createExpense(UUID budgetId, Expense expenseObject) {
         Budget budget = budgetRepository.findById(budgetId).orElseThrow();
+        Expense expense = expenseRepository.findById(expenseObject.getId()).orElseThrow();
+        //if expense has already been added
         expenseObject.setBudget(budget);
         expenseObject.setUser(currentUser());
         budget.setBalance(budget.getBalance() - expenseObject.getPrice()); //TODO add validation for if balance is under $0
@@ -69,11 +72,16 @@ public class ExpenseService extends ApplicationService {
     }
 
     //PUT/UPDATE
-//    public Expense updateExpense(@PathVariable String budgetId, @PathVariable String expenseId, Expense expenseObject) {
-//
-//
-//    }
+    //TODO Refactor as necessary
+    public Expense updateExpense(@PathVariable UUID budgetId, @PathVariable UUID expenseId, Expense expenseObject) {
+        Budget budget = budgetRepository.findById(budgetId).orElseThrow();
+        Expense expense = expenseRepository.findById(expenseId).orElseThrow();
+        expenseObject.setBudget(budget);
+        expenseObject.setUser(currentUser());
+        budget.setBalance(budget.getBalance() - expenseObject.getPrice()); //TODO add validation for if balance is under $0
+        budgetRepository.save(budget);
+        return expenseRepository.save(expenseObject);
+    }
 }
 
-//TODO DELETE
 //TODO add docstrings
