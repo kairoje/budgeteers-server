@@ -50,5 +50,14 @@ public class BudgetService extends ApplicationService {
         }
     }
 
+    public Budget createBudget(Budget budgetObject) {
+        Budget budget = budgetRepository.findById(budgetObject.getId());
+        if (budget != null) {
+            throw new RuntimeException("Budget with " + budgetObject.getId + " already exists");
+        } else {
+            return budgetRepository.save(budgetObject);
+        }
+    }
+
 
 }
