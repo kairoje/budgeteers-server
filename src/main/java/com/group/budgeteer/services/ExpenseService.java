@@ -63,6 +63,14 @@ public class ExpenseService extends ApplicationService{
 //        }
 
 
+
+    }
+    public void deleteExpense(UUID expenseId){
+        Expense expense = expenseRepository.findById(expenseId).orElseThrow();
+        Budget budget = expense.getBudget();
+        budget.setBalance(budget.getBalance() + expense.getPrice());
+        budgetRepository.save(budget);
+        expenseRepository.delete(expense);
     }
     //PUT/UPDATE
     //DELETE
