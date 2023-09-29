@@ -54,4 +54,13 @@ public class Expense extends ApplicationEntity<Expense> {
 //    @JsonIgnore
 //    @JoinColumn(name = "budgets_id", nullable = false)
 //    private Budget budget;
+
+
+    @Override
+    public Expense update(Expense payload) {
+      setName(payload.getName());
+      setPrice(payload.getPrice());
+      setDescription(payload.getDescription());
+      return this;
+    }
 }
