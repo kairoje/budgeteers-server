@@ -36,8 +36,10 @@ public class ExpenseService extends ApplicationService{
         this.budgetRepository = budgetRepository;
     }
 
+
     //GET ALL
-    //GET ONE
+
+
     //POST/CREATE
     public Expense createExpense(UUID budgetId, Expense expenseObject) throws Exception {
         Budget budget = budgetRepository.findById(budgetId).orElseThrow();
@@ -51,3 +53,9 @@ public class ExpenseService extends ApplicationService{
     //DELETE
 
 }
+
+//TODO GET ALL
+//TODO GET ONE
+//TODO PUT
+//TODO DELETE
+//TODO add docstrings
