@@ -4,12 +4,11 @@ import com.group.budgeteer.models.Budget;
 import com.group.budgeteer.models.Expense;
 import com.group.budgeteer.repositories.BudgetRepository;
 import com.group.budgeteer.repositories.ExpenseRepository;
-import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import java.util.Optional;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -36,35 +35,33 @@ public class ExpenseService extends ApplicationService{
         this.budgetRepository = budgetRepository;
     }
 
+
     //GET ALL
+    public List<Expense> getExpenses(UUID budgetId){
+        return expenseRepository.findAllById(budgetId);
+    }
+
     //GET ONE
+    public Expense getExpense(UUID budgetId, UUID expenseId){
+        Budget budget = budgetRepository.findById(budgetId).orElseThrow();
+
+        return  expenseRepository.findById(expenseId).orElseThrow();
+    }
+
     //POST/CREATE
-    public Expense createExpense(UUID budgetId, Expense expenseObject) throws Exception {
+    public Expense createExpense(UUID budgetId, Expense expenseObject) {
         Budget budget = budgetRepository.findById(budgetId).orElseThrow();
         expenseObject.setBudget(budget);
         expenseObject.setUser(currentUser());
+        budget.setBalance(budget.getBalance() - expenseObject.getPrice()); //TODO add validation for if balance is under $0
+        budgetRepository.save(budget);
         return expenseRepository.save(expenseObject);
-
-//        Budget budget = budgetRepository.findByIdAndUserId(budgetId, currentUser().getId());
-//        Expense expense = expenseRepository.findByNameAndUserId(expenseObject.getName(), currentUser().getId());
-//        if (budget == null){
-//            throw new Exception("Budget id does not exist");
-//        } else {
-//            if (expense == null) {
-//                expense.setUser(currentUser());
-//                expense.setName(expenseObject.getName());
-//                expense.setPrice(expenseObject.getPrice());
-//                expense.setBudget(budget); //assign to a budget
-//                expense.setDescription(expenseObject.getDescription());
-//                expenseRepository.save(expense);
-//            }else {
-//                throw new Exception("Expense already exists");
-//            }
-//        }
-
-
     }
     //PUT/UPDATE
     //DELETE
 
 }
+
+//TODO PUT
+//TODO DELETE
+//TODO add docstrings
