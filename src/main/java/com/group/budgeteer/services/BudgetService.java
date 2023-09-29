@@ -31,11 +31,15 @@ public class BudgetService extends ApplicationService {
     }
 
 
-    public List<Budget> getBudgets() { return (List<Budget>) currentUser(); }
+    public List<Budget> getBudgets() { return budgetRepository.findAll(); }
 
-    public Budget getBudget(UUID budgetId) { return budgetRepository.findById(budgetId).orElseThrow(() -> new RuntimeException("Budget with " + budgetId + " not found")); }
+    public Budget getBudget(UUID budgetId) { return budgetRepository.findById(budgetId).orElseThrow(); }
 
-    public Budget createBudget(Budget budgetObject) { return budgetRepository.save(budgetObject); }
+    public Budget createBudget(Budget budgetObject) {
+        budgetObject.setUser(currentUser());
+        return budgetRepository.save(budgetObject);
+
+    }
 
     public Budget updateBudget(Budget budgetObject) {
         Budget budget = budgetRepository.findById(budgetObject.getId()).orElseThrow();
