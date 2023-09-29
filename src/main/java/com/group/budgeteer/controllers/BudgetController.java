@@ -21,5 +21,9 @@ public class BudgetController {
     @GetMapping("/budgets")
     public List<Budget> getBudgets() { return budgetService.getBudgets(); }
 
-
+    @GetMapping("/budgets/{budgetId}") {
+        public Optional<Budget> getBudget(@PathVariable(value = "budgetId") budgetId) {
+            return budgetService.getBudget(budgetId);
+        }
+    }
 }
