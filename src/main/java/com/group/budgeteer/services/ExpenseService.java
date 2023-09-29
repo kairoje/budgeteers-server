@@ -1,11 +1,15 @@
 package com.group.budgeteer.services;
 
+import com.group.budgeteer.models.Budget;
 import com.group.budgeteer.models.Expense;
 import com.group.budgeteer.repositories.BudgetRepository;
 import com.group.budgeteer.repositories.ExpenseRepository;
+import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -36,6 +40,7 @@ public class ExpenseService extends ApplicationService{
     //GET ONE
     //POST/CREATE
     public Expense createExpense(UUID budgetId, Expense expenseObject){
+        Budget budget = budgetRepository.findByIdAndUserId(budgetId, currentUser().getId());
 
     }
     //PUT/UPDATE
