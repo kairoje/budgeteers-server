@@ -42,5 +42,7 @@ public class BudgetService extends ApplicationService {
         return budgetRepository.save(budget.update(budgetObject));
     }
 
-
+    public void deleteBudget(UUID budgetId) {
+         budgetRepository.deleteById(budgetId);
+    }
 }
