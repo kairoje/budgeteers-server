@@ -46,6 +46,11 @@ public class ExpenseController {
     public Expense createExpense(@PathVariable(value = "budgetId") UUID budgetId, @RequestBody Expense expenseObject) {
         return expenseService.createExpense(budgetId, expenseObject);
     }
+
+    @PutMapping(path = "/api/v1/budgets/{budgetId}/expenses/{expenseId}")
+    public Expense updateExpense(@PathVariable String budgetId, @PathVariable String expenseId, Expense expenseObject){
+        return expenseService.updateExpense(budgetId, expenseId, expenseObject);
+    }
 }
 
 //TODO add docstring

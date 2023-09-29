@@ -6,6 +6,7 @@ import com.group.budgeteer.repositories.BudgetRepository;
 import com.group.budgeteer.repositories.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -57,11 +58,12 @@ public class ExpenseService extends ApplicationService{
         budgetRepository.save(budget);
         return expenseRepository.save(expenseObject);
     }
+
     //PUT/UPDATE
-    //DELETE
+    public Expense updateExpense(@PathVariable String budgetId, @PathVariable String expenseId, Expense expenseObject){
 
-}
 
-//TODO PUT
+    }
+
 //TODO DELETE
 //TODO add docstrings
