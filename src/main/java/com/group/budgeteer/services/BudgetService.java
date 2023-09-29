@@ -31,7 +31,7 @@ public class BudgetService extends ApplicationService {
     }
 
 
-    public List<Budget> getBudgets() { return currentUser().getBudgets(); }
+    public List<Budget> getBudgets() { return (List<Budget>) currentUser(); }
 
     public Budget getBudget(UUID budgetId) { return budgetRepository.findById(budgetId).orElseThrow(() -> new RuntimeException("Budget with " + budgetId + " not found")); }
 
