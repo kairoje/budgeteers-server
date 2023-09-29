@@ -4,6 +4,7 @@ import com.group.budgeteer.classes.APIResponse;
 import com.group.budgeteer.models.Budget;
 import com.group.budgeteer.services.BudgetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +27,9 @@ public class BudgetController {
                 .ok(new APIResponse<>(budgetService.getBudgets(), "success"));
     }
 
-    @GetMapping("/{budgetId}")
-    public ResponseEntity<APIResponse<Budget>> getBudget(@PathVariable(value = "budgetId")UUID budgetId){
+  
+    @GetMapping("/budgets/{budgetId}")
+    public ResponseEntity<APIResponse<Budget>> getBudget(@PathVariable( value = "budgetId") UUID budgetId){
         return ResponseEntity
                 .ok(new APIResponse<>(budgetService.getBudget(budgetId), "success"));
     }
@@ -36,5 +38,19 @@ public class BudgetController {
     public ResponseEntity<APIResponse<Budget>> createBudget(@Valid @RequestBody Budget budgetObject) {
         return ResponseEntity
                 .ok(new APIResponse<>(budgetService.createBudget(budgetObject), "success"));
+    }
+
+    @PutMapping("/budgets")
+    public ResponseEntity<APIResponse<Budget>> updateBudget(@Valid @RequestBody Budget budgetObject) {
+        return ResponseEntity
+                .ok(new APIResponse<>(budgetService.updateBudget(budgetObject), "success"));
+    }
+
+    @PutMapping("/budgets/{budgetId}")
+    public ResponseEntity<APIResponse<APIResponse<Void>>> updateBudget(@PathVariable(value = "budgetId") UUID id) {
+        budgetService.deleteBudget(id);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .body(new APIResponse<>(null, "success"));
     }
 }

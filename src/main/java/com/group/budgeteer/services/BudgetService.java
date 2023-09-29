@@ -33,6 +33,7 @@ public class BudgetService extends ApplicationService {
 
     public List<Budget> getBudgets() { return budgetRepository.findAll(); }
 
+
     public Budget getBudget(UUID budgetId) { return budgetRepository.findById(budgetId).orElseThrow(); }
 
     public Budget createBudget(Budget budgetObject) {
@@ -46,7 +47,5 @@ public class BudgetService extends ApplicationService {
         return budgetRepository.save(budget.update(budgetObject));
     }
 
-    public void deleteBudget(UUID budgetId) {
-         budgetRepository.deleteById(budgetId);
-    }
+    public void deleteBudget(UUID budgetId) { budgetRepository.deleteById(budgetId); }
 }
