@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * Represents a budget entity in the application.
+ * @author Julian Smith
  */
 @Getter
 @Setter
@@ -27,6 +28,7 @@ public class Budget extends ApplicationEntity<Budget> {
 
     /**
      * The balance of the budget. It must be greater than 0.
+     *
      */
     @Column(nullable = false)
     @NotNull(message = "Balance can not be empty")
