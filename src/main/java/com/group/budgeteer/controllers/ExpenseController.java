@@ -5,6 +5,7 @@ import com.group.budgeteer.services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -28,9 +29,15 @@ public class ExpenseController {
         this.expenseService = expenseService;
     }
 
+    //GET ALL
+    @GetMapping(path = "/api/v1/budgets/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/{budgetId}/expenses
+    public List<Expense> getExpenses(@PathVariable UUID budgetId){
+        return expenseService.getExpenses(budgetId);
+    }
+
     //POST/CREATE
     @PostMapping(path = "/api/v1/budgets/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/{budgetId}/expenses
-    public Expense createExpense(@PathVariable(value = "budgetId") UUID budgetId, @RequestBody Expense expenseObject) throws Exception {
+    public Expense createExpense(@PathVariable(value = "budgetId") UUID budgetId, @RequestBody Expense expenseObject) {
         return expenseService.createExpense(budgetId, expenseObject);
     }
 }
