@@ -14,9 +14,5 @@ import java.util.UUID;
  */
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, UUID> {
-    //Expense findByNameAndUserId(String name, UUID userId);
-
-    List<Expense> findByUserId (UUID userId);
-
     List<Expense> findAllById(UUID budgetId);
 }
