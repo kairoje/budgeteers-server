@@ -1,5 +1,6 @@
 package com.group.budgeteer.repositories;
 
+import com.group.budgeteer.models.Budget;
 import com.group.budgeteer.models.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,4 +13,5 @@ import java.util.UUID;
  */
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, UUID> {
+    Expense findByNameAndUserId(String name, UUID userId);
 }

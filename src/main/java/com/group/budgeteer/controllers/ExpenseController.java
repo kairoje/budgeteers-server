@@ -30,7 +30,7 @@ public class ExpenseController {
 
     //POST/CREATE
     @PostMapping(path = "/api/v1/budgets/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/{budgetId}/expenses
-    public Expense createExpense(@PathVariable(value = "budgetId") UUID budgetId, @RequestBody Expense expenseObject){
+    public Expense createExpense(@PathVariable(value = "budgetId") UUID budgetId, @RequestBody Expense expenseObject) throws Exception {
         return expenseService.createExpense(budgetId, expenseObject);
     }
 }
