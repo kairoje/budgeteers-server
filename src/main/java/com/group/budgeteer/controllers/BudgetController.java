@@ -20,7 +20,10 @@ public class BudgetController {
     public void setBudgetService(BudgetService budgetService) { this.budgetService = budgetService; }
 
     @GetMapping("/budgets")
-    public List<Budget> getBudgets() { return budgetService.getBudgets(); }
+    public ResponseEntity<APIResponse<List<Budget>>> getBudgets(){
+        return ResponseEntity
+                .ok(new APIResponse<>(budgetService.getBudgets(), "success"));
+    }
 
     @GetMapping("/budgets/{budgetId}")
     public ResponseEntity<APIResponse<Budget>> getBudget(@Valid @RequestBody Budget budgetObject){
