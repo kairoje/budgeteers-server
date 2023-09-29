@@ -42,7 +42,11 @@ public class ExpenseService extends ApplicationService{
 
     //GET ONE
     public Expense getExpense(UUID budgetId, UUID expenseId){
+        Budget budget = budgetRepository.findById(budgetId).orElseThrow();
 
+        if (budget != null) {
+            return  expenseRepository.findById(expenseId).orElseThrow();
+        }
     }
 
     //POST/CREATE
