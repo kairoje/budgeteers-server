@@ -1,6 +1,9 @@
 package com.group.budgeteer.services;
 
+import com.group.budgeteer.models.User;
+import com.group.budgeteer.security.AuthUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.logging.Logger;
@@ -22,6 +25,12 @@ public class BudgetService {
     @Autowired
     public void setExpenseRepository(ExpenseRepository expenseRepository) {
         this.expenseRepository = expenseRepository;
+    }
+
+    //Retrieves the currently logged-in user's data
+    public static User getCurrentLoggedInUser(){
+        AuthUserDetails authUserDetails = (AuthUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return authUserDetails.getUser();
     }
 
 }
