@@ -1,15 +1,18 @@
 package com.group.budgeteer.services;
 
+import com.group.budgeteer.models.ApplicationEntity;
 import com.group.budgeteer.models.User;
 import com.group.budgeteer.security.AuthUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 @Service
-public class BudgetService {
+public class BudgetService extends ApplicationService {
 
     private BudgetRepository budgetRepository;
 
@@ -37,5 +40,15 @@ public class BudgetService {
             return budgets;
         }
     }
+
+    public Optional<Budget> getBudget(budgetId) { //id being generated from uuid
+        Budget budget = budgetRepository.findByIdAndUserId(budgetId, BudgetService.getCurrentLoggedInUser().getId());
+        if (budget == null) {
+            throw new RuntimeException("Budget with " + budgetId + " not found");
+        } else {
+            return Optional.of(budget)
+        }
+    }
+
 
 }
