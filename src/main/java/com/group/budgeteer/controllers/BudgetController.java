@@ -28,7 +28,7 @@ public class BudgetController {
     }
 
   
-    @GetMapping("/budgets/{budgetId}")
+    @GetMapping("/{budgetId}")
     public ResponseEntity<APIResponse<Budget>> getBudget(@PathVariable( value = "budgetId") UUID budgetId){
         return ResponseEntity
                 .ok(new APIResponse<>(budgetService.getBudget(budgetId), "success"));
@@ -46,7 +46,7 @@ public class BudgetController {
                 .ok(new APIResponse<>(budgetService.updateBudget(budgetObject), "success"));
     }
 
-    @PutMapping("/budgets/{budgetId}")
+    @PutMapping("/{budgetId}")
     public ResponseEntity<APIResponse<APIResponse<Void>>> updateBudget(@PathVariable(value = "budgetId") UUID id) {
         budgetService.deleteBudget(id);
         return ResponseEntity

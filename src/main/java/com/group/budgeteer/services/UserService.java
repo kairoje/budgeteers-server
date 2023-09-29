@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
 //TODO add docstrings
 @Service
@@ -62,5 +63,9 @@ public class UserService extends ApplicationService{
         } catch (Exception e) {
             throw new RuntimeException("Invalid email/password");
         }
+    }
+
+    public List<User> test(){
+        return userRepository.findAll();
     }
 }

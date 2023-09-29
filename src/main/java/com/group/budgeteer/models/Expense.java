@@ -63,6 +63,6 @@ public class Expense extends ApplicationEntity<Expense> {
      */
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "budgets_id", nullable = false)
+    @JoinColumn(name = "budget_id", nullable = false)
     private Budget budget;
 }

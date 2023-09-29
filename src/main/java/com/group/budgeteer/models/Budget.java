@@ -1,6 +1,7 @@
 package com.group.budgeteer.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -46,6 +47,7 @@ public class Budget extends ApplicationEntity<Budget> {
      * The user associated with this budget.
      */
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

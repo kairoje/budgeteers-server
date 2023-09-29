@@ -5,12 +5,10 @@ import com.group.budgeteer.models.User;
 import com.group.budgeteer.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 //TODO add docstrings
 
 @RestController
@@ -34,5 +32,10 @@ public class UserController {
     public ResponseEntity<APIResponse<User>> login(@RequestBody User userObject){
         return ResponseEntity
                 .ok(new APIResponse<>(userService.login(userObject), "success"));
+    }
+
+    @GetMapping
+    public List<User> test(){
+        return userService.test();
     }
 }

@@ -31,13 +31,16 @@ public class BudgetService extends ApplicationService {
     }
 
 
-    public List<Budget> getBudgets() { return budgetRepository.findAll(); }
+    public List<Budget> getBudgets() { return currentUser().getBudgets(); }
 
 
     public Budget getBudget(UUID budgetId) { return budgetRepository.findById(budgetId).orElseThrow(); }
 
     public Budget createBudget(Budget budgetObject) {
+        logger.info("Creating Budget");
         budgetObject.setUser(currentUser());
+        logger.info("Setting User");
+        logger.info(budgetObject.toString());
         return budgetRepository.save(budgetObject);
 
     }
