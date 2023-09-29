@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * ExpenseService class hosts the business logic for ExpenseController class.
  */
 @Service
-public class ExpenseService extends ApplicationService{
+public class ExpenseService extends ApplicationService {
     Logger logger = Logger.getLogger(ExpenseService.class.getName());
 
     private final ExpenseRepository expenseRepository;
@@ -28,7 +28,7 @@ public class ExpenseService extends ApplicationService{
      * for managing and accessing expense and budget related data
      *
      * @param expenseRepository Is used by the ExpenseService
-     * @param budgetRepository Is used by the ExpenseService
+     * @param budgetRepository  Is used by the ExpenseService
      */
     @Autowired
     public ExpenseService(ExpenseRepository expenseRepository, BudgetRepository budgetRepository) {
@@ -38,15 +38,15 @@ public class ExpenseService extends ApplicationService{
 
 
     //GET ALL
-    public List<Expense> getExpenses(UUID budgetId){
+    public List<Expense> getExpenses(UUID budgetId) {
         return expenseRepository.findAllById(budgetId);
     }
 
     //GET ONE
-    public Expense getExpense(UUID budgetId, UUID expenseId){
+    public Expense getExpense(UUID budgetId, UUID expenseId) {
         Budget budget = budgetRepository.findById(budgetId).orElseThrow();
 
-        return  expenseRepository.findById(expenseId).orElseThrow();
+        return expenseRepository.findById(expenseId).orElseThrow();
     }
 
     //POST/CREATE
@@ -60,10 +60,11 @@ public class ExpenseService extends ApplicationService{
     }
 
     //PUT/UPDATE
-    public Expense updateExpense(@PathVariable String budgetId, @PathVariable String expenseId, Expense expenseObject){
-
-
-    }
+//    public Expense updateExpense(@PathVariable String budgetId, @PathVariable String expenseId, Expense expenseObject) {
+//
+//
+//    }
+}
 
 //TODO DELETE
 //TODO add docstrings

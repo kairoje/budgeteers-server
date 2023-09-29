@@ -39,7 +39,7 @@ public class Budget extends ApplicationEntity<Budget> {
      * The date associated with the budget. It cannot be empty.
      */
     @Column(nullable = false)
-    @NotBlank(message = "Date can not be empty")
+    //@NotBlank(message = "Date can not be empty")
     private LocalDate date;
 
     /**
