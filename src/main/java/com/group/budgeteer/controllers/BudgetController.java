@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/budget")
+@RequestMapping("/api/v1/budgets")
 public class BudgetController {
 
     private BudgetService budgetService;
@@ -21,19 +21,20 @@ public class BudgetController {
     @Autowired
     public void setBudgetService(BudgetService budgetService) { this.budgetService = budgetService; }
 
-    @GetMapping("/budgets")
+    @GetMapping
     public ResponseEntity<APIResponse<List<Budget>>> getBudgets(){
         return ResponseEntity
                 .ok(new APIResponse<>(budgetService.getBudgets(), "success"));
     }
 
+  
     @GetMapping("/budgets/{budgetId}")
     public ResponseEntity<APIResponse<Budget>> getBudget(@PathVariable( value = "budgetId") UUID budgetId){
         return ResponseEntity
                 .ok(new APIResponse<>(budgetService.getBudget(budgetId), "success"));
     }
 
-    @PostMapping("/budgets")
+    @PostMapping
     public ResponseEntity<APIResponse<Budget>> createBudget(@Valid @RequestBody Budget budgetObject) {
         return ResponseEntity
                 .ok(new APIResponse<>(budgetService.createBudget(budgetObject), "success"));
