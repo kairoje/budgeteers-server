@@ -46,25 +46,6 @@ public class ExpenseService extends ApplicationService{
         budget.setBalance(budget.getBalance() - expenseObject.getPrice()); //TODO add validation for if balance is under $0
         budgetRepository.save(budget);
         return expenseRepository.save(expenseObject);
-
-//        Budget budget = budgetRepository.findByIdAndUserId(budgetId, currentUser().getId());
-//        Expense expense = expenseRepository.findByNameAndUserId(expenseObject.getName(), currentUser().getId());
-//        if (budget == null){
-//            throw new Exception("Budget id does not exist");
-//        } else {
-//            if (expense == null) {
-//                expense.setUser(currentUser());
-//                expense.setName(expenseObject.getName());
-//                expense.setPrice(expenseObject.getPrice());
-//                expense.setBudget(budget); //assign to a budget
-//                expense.setDescription(expenseObject.getDescription());
-//                expenseRepository.save(expense);
-//            }else {
-//                throw new Exception("Expense already exists");
-//            }
-//        }
-
-
     }
     //PUT/UPDATE
     //DELETE
