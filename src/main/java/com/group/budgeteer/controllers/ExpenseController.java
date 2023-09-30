@@ -5,10 +5,12 @@ import com.group.budgeteer.services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -35,6 +37,7 @@ public class ExpenseController {
     static HashMap<String, Object> result = new HashMap<>();
     static HashMap<String, Object> message = new HashMap<>();
 
+    //HELLO WORLD
     @GetMapping(path = "/hello-world")
     public String helloWorld() {
         return "hello World";
@@ -42,7 +45,7 @@ public class ExpenseController {
 
     //GET ALL
     @GetMapping(path = "/api/v1/budgets/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/1/expenses
-    public ResponseEntity<?> getExpenses(@PathVariable UUID budgetId) {
+    public ResponseEntity<?> getExpenses(@PathVariable(value = "budgetId") UUID budgetId) {
         List<Expense> expenses = expenseService.getExpenses(budgetId);
         if (expenses.isEmpty()) {
             message.put("message", "cannot find any expenses");
@@ -60,9 +63,20 @@ public class ExpenseController {
 
     //GET ONE
     @GetMapping(path = "/api/v1/budgets/{budgetId}/expenses/{expenseId}") //http://localhost:4000/api/v1/budgets/1/expenses/1
-    public Expense getExpense(@PathVariable(value = "budgetId") UUID budgetId, @PathVariable(value = "expenseId") UUID expenseId){
-        return expenseService.getExpense(budgetId, expenseId);
+    public ResponseEntity<?> getExpense(@PathVariable(value = "budgetId") UUID budgetId, @PathVariable(value = "expenseId") UUID expenseId) {
+        Expense expense = expenseService.getExpense(budgetId, expenseId);
+        if (expense != null) {
+            message.put("message", "success");
+            message.put("data", expense);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else {
+            message.put("message", "cannot find expense with id " + expenseId);
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
     }
+//    public Expense getExpense(@PathVariable(value = "budgetId") UUID budgetId, @PathVariable(value = "expenseId") UUID expenseId){
+//        return expenseService.getExpense(budgetId, expenseId);
+//    }
 
     //POST/CREATE
     @PostMapping(path = "/api/v1/budgets/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/{budgetId}/expenses

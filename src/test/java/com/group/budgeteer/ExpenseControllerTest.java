@@ -15,9 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
@@ -47,6 +45,7 @@ public class ExpenseControllerTest {
     Budget budget2 = new Budget();
     Expense EXPENSE_2 = new Expense("food", "description 2", 21.68, user2, budget2);
 
+    //HELLO WORLD
     @Test
     public void shouldReturnHelloWorld_success() throws Exception {
         mockMvc.perform(get("/api/hello-world/"))
@@ -55,6 +54,7 @@ public class ExpenseControllerTest {
                 .andDo(print());
     }
 
+    //GET ALL
     @Test
     public void getExpenses_success() throws Exception {
         List<Expense> expenses = new ArrayList<>(Arrays.asList(EXPENSE_1, EXPENSE_2));
@@ -67,9 +67,24 @@ public class ExpenseControllerTest {
                 .andExpect(jsonPath("$.message").value("success"))
                 .andDo(print());
     }
+
+    //GET ONE
+    @Test
+    public void getExpense_success() throws Exception {
+        when(expenseService.getExpense(EXPENSE_1.getBudget().getId() , EXPENSE_1.getId())).thenReturn(EXPENSE_1);
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/budgets/{budgetId}/expenses/{expenseId}", "1") //bc this is a get request
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.id" ).value(EXPENSE_1.getId()))
+                .andExpect(jsonPath("$.data.name" ).value(EXPENSE_1.getName()))
+                .andExpect(jsonPath("$.data.description" ).value(EXPENSE_1.getDescription()))
+                .andExpect(jsonPath("$.data.price" ).value(EXPENSE_1.getPrice()))
+                .andExpect(jsonPath("$.message" ).value("success"))
+                .andDo(print());
+    }
 }
 
-//TODO GET ONE
+
 //TODO PUT
 //TODO POST
 //TODO DELETE
