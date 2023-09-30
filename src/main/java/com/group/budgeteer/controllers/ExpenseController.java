@@ -3,8 +3,11 @@ package com.group.budgeteer.controllers;
 import com.group.budgeteer.models.Expense;
 import com.group.budgeteer.services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -29,11 +32,31 @@ public class ExpenseController {
         this.expenseService = expenseService;
     }
 
+    static HashMap<String, Object> result = new HashMap<>();
+    static HashMap<String, Object> message = new HashMap<>();
+
+    @GetMapping(path = "/hello-world")
+    public String helloWorld() {
+        return "hello World";
+    }
+
     //GET ALL
     @GetMapping(path = "/api/v1/budgets/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/1/expenses
-    public List<Expense> getExpenses(@PathVariable UUID budgetId){
-        return expenseService.getExpenses(budgetId);
+    public ResponseEntity<?> getExpenses(@PathVariable UUID budgetId) {
+        List<Expense> expenses = expenseService.getExpenses(budgetId);
+        if (expenses.isEmpty()) {
+            message.put("message", "cannot find any expenses");
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        } else {
+            message.put("message", "success");
+            message.put("data", expenses);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
     }
+//    public List<Expense> getExpenses(@PathVariable UUID budgetId){
+//        List<Expense> expenseList = expenseService.getExpenses(budgetId);
+//        return expenseService.getExpenses(budgetId);
+//    }
 
     //GET ONE
     @GetMapping(path = "/api/v1/budgets/{budgetId}/expenses/{expenseId}") //http://localhost:4000/api/v1/budgets/1/expenses/1
