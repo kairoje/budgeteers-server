@@ -23,6 +23,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "budgets")
 public class Budget extends ApplicationEntity<Budget> {
