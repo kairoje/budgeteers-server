@@ -7,17 +7,21 @@ import com.group.budgeteer.models.Expense;
 import com.group.budgeteer.models.User;
 import com.group.budgeteer.services.ExpenseService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -82,9 +86,27 @@ public class ExpenseControllerTest {
                 .andExpect(jsonPath("$.message" ).value("success"))
                 .andDo(print());
     }
+
+    @Test
+    void createExpense_success() throws Exception {
+        when(expenseService.createExpense(anyLong(), Mockito.any(Expense.class))).thenReturn(EXPENSE_1); //TODO Mockito cannot use anyUUID
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/api/v1/budgets/{budgetId}/expenses")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(this.objectMapper.writeValueAsString(EXPENSE_1));
+
+        //once send button is clicked
+        mockMvc.perform(mockRequest)
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$.data.name" ).value(EXPENSE_1.getName()))
+                .andExpect(jsonPath("$.data.description" ).value(EXPENSE_1.getDescription()))
+                .andExpect(jsonPath("$.data.price" ).value(EXPENSE_1.getPrice()))
+                .andExpect(jsonPath("$.message" ).value("success"))
+                .andDo(print());
+    }
 }
 
 
-//TODO PUT
 //TODO POST
 //TODO DELETE

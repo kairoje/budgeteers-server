@@ -80,9 +80,20 @@ public class ExpenseController {
 
     //POST/CREATE
     @PostMapping(path = "/api/v1/budgets/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/{budgetId}/expenses
-    public Expense createExpense(@PathVariable(value = "budgetId") UUID budgetId, @RequestBody Expense expenseObject) {
-        return expenseService.createExpense(budgetId, expenseObject);
+    public ResponseEntity<?> createExpense(@PathVariable(value = "budgetId") UUID budgetId, @RequestBody Expense expenseObject) {
+        Expense newExpense = expenseService.createExpense(budgetId, expenseObject);
+        if (newExpense != null) {
+            message.put("message", "success");
+            message.put("data", newExpense);
+            return new ResponseEntity<>(message, HttpStatus.CREATED);
+        } else {
+            message.put("message", "unable to create an expense at this time");
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
     }
+//    public Expense createExpense(@PathVariable(value = "budgetId") UUID budgetId, @RequestBody Expense expenseObject) {
+//        return expenseService.createExpense(budgetId, expenseObject);
+//    }
 
     @PutMapping(path = "/api/v1/budgets/{budgetId}/expenses/{expenseId}")
     public Expense updateExpense(@PathVariable UUID budgetId, @PathVariable UUID expenseId, Expense expenseObject){
