@@ -96,9 +96,20 @@ public class ExpenseController {
 //    }
 
     @PutMapping(path = "/api/v1/budgets/{budgetId}/expenses/{expenseId}")
-    public Expense updateExpense(@PathVariable UUID budgetId, @PathVariable UUID expenseId, Expense expenseObject){
-        return expenseService.updateExpense(budgetId, expenseId, expenseObject);
+    public ResponseEntity<?> updateExpense(@PathVariable(value = "budgetId") UUID budgetId, @PathVariable(value = "expenseId") UUID expenseId, @RequestBody Expense expenseObject) {
+        Expense expenseToUpdate = expenseService.updateExpense(budgetId, expenseId, expenseObject);
+        if (expenseToUpdate == null) {
+            message.put("message", "cannot find expense with id " + expenseId);
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        } else {
+            message.put("message", "success");
+            message.put("data", expenseToUpdate.getUpdatedAt());
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
     }
+//    public Expense updateExpense(@PathVariable UUID budgetId, @PathVariable UUID expenseId, @RequestBody Expense expenseObject){
+//        return expenseService.updateExpense(budgetId, expenseId, expenseObject);
+//    }
 }
 
 //TODO add docstring

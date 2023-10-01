@@ -89,7 +89,7 @@ public class ExpenseControllerTest {
 
     @Test
     void createExpense_success() throws Exception {
-        when(expenseService.createExpense(anyLong(), Mockito.any(Expense.class))).thenReturn(EXPENSE_1); //TODO Mockito cannot use anyUUID
+        when(expenseService.createExpense(Mockito.any(UUID.class), Mockito.any(Expense.class))).thenReturn(EXPENSE_1);
         MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/api/v1/budgets/{budgetId}/expenses")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -105,8 +105,33 @@ public class ExpenseControllerTest {
                 .andExpect(jsonPath("$.message" ).value("success"))
                 .andDo(print());
     }
+
+    @Test
+    void updateExpense_success() throws Exception {
+        UUID uuid = eec5892f-3859-4066-8601-191becb8015f; //TODO figure out how to assign uuid
+
+        User user4 = new User();
+        Budget budget4 = new Budget();
+        Expense EXPENSE_4 = new Expense(uuid, "expense 4", "description 4", 31.68, user4, budget4);
+
+        Expense updatedExpense = new Expense(uuid, "expense 4", "updated description", 60.00, user4, budget4);
+        when(expenseService.updateExpense(Mockito.any(UUID.class), Mockito.any(UUID.class), Mockito.any(Expense.class))).thenReturn(updatedExpense);
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/api/v1/budgets/{budgetId}/expenses/{expenseId}", UUID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(this.objectMapper.writeValueAsString(EXPENSE_4));
+
+        //  Perform the PUT request using MockMvc and make assertions on the response.
+        mockMvc.perform(mockRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$.data.id").value(updatedExpense.getId()))
+                .andExpect(jsonPath("$.data.name").value(updatedExpense.getName()))
+                .andExpect(jsonPath("$.data.description").value(updatedExpense.getDescription()))
+                .andExpect(jsonPath("$.message").value("success"))
+                .andDo(print());
+    }
 }
 
-
-//TODO POST
 //TODO DELETE
+//TODO add docstring
