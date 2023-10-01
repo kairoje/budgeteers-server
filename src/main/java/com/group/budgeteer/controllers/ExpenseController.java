@@ -1,5 +1,6 @@
 package com.group.budgeteer.controllers;
 
+import com.group.budgeteer.classes.APIResponse;
 import com.group.budgeteer.models.Expense;
 import com.group.budgeteer.services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,6 +111,13 @@ public class ExpenseController {
 //    public Expense updateExpense(@PathVariable UUID budgetId, @PathVariable UUID expenseId, @RequestBody Expense expenseObject){
 //        return expenseService.updateExpense(budgetId, expenseId, expenseObject);
 //    }
+
+    @DeleteMapping(path="/expenses/{expenseId}")
+    public ResponseEntity<APIResponse<Void>> deleteExpense(@PathVariable(value = "expenseId") UUID id ){
+        expenseService.deleteExpense(id);
+        return ResponseEntity
+                .ok(new APIResponse<>(null, "success"));
+    }
 }
 
 //TODO add docstring

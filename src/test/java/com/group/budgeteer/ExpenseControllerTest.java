@@ -131,7 +131,22 @@ public class ExpenseControllerTest {
                 .andExpect(jsonPath("$.message").value("success"))
                 .andDo(print());
     }
+
+    @Test
+    void deleteExpense_success() throws Exception {
+        when(expenseService.deleteExpense(EXPENSE_1.getId()).thenReturn(EXPENSE_1));
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/expenses/{expenseId}", UUID) //whatever expense 1 UUID is
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(mockRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$.data.id").value(EXPENSE_1.getId()))
+                .andExpect(jsonPath("$.data.name").value(EXPENSE_1.getName()))
+                .andExpect(jsonPath("$.data.description").value(EXPENSE_1.getDescription()))
+                .andExpect(jsonPath("$.message").value("success"))
+                .andDo(print());
+    }
 }
 
-//TODO DELETE
 //TODO add docstring
