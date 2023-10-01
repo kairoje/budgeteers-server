@@ -1,6 +1,7 @@
 package com.group.budgeteer.security;
 
 import com.group.budgeteer.models.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -81,7 +82,6 @@ public class AuthUserDetails implements UserDetails {
         return true;
     }
 
-    public User getUser() {
-        return user;
-    }
+    public User getUser() { return user; }
+
 }
