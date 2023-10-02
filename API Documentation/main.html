@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API-Documentation</title>
+</head>
+<body>
+    <main>
+        <h1>Budgeteers API</h1>
+        <p>Description...</p>
+    </main>
+
+    <div id="api-info">
+        <h3>HTTP Requests:</h3>
+        <ul id="http-requests">
+            <li>PUT: To update a resource</li>
+            <li>POST: To create a resource</li>
+            <li>GET: To get a resource</li>
+            <li>DELETE: To delete a resource</li>
+        </ul>
+
+        <h3>Usual Server Responses:</h3>
+        <ul id="server-responses">
+            <li>200 <code>OK</code> - request was successful</li>
+            <li>201 <code>Created</code> - request successful and resource created</li>
+            <li>401 <code>Unarthorized</code> - authentication failed or user doesn't have permissions for requested operation</li>
+            <li>403 <code>Forbidden</code> - access denied</li>
+        </ul>
+
+        <h3>User Auth</h3>
+        <p>POST: For user registration <br>
+            This endpoint allows users to sign up by creating a new user account. The request should include a valid user object, and validation is performed using the @Valid annotation. Upon successful registration, it returns a success message along with the created user's information. <br><br>
+            test
+        </p>
+
+    </div>
+
+</body>
+</html>
