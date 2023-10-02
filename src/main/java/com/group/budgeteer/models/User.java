@@ -58,6 +58,10 @@ public class User extends ApplicationEntity<User> {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Budget> budgets;
 
+//    @OneToMany(mappedBy = "user", orphanRemoval = true)
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    private List<Expense> expenses;
+
     @Override
    public User update(User payload) {
         setEmail(payload.getEmail());

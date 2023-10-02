@@ -45,16 +45,15 @@ public class ExpenseControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-
-    User user1 = new User();
     Budget budget1 = new Budget(UUID.randomUUID(), 5000.00, LocalDate.of(2023, 9,1), null);
-    Expense EXPENSE_1 = new Expense("gas", "description 1", 48.56, user1, budget1);
-    Expense EXPENSE_3 = new Expense("exp3", "description 3", 21.68, user1, budget1);
-    Expense EXPENSE_4 = new Expense("exp4", "description 4", 21.68, user1, budget1);
+    Expense EXPENSE_1 = new Expense("exp1", "description1", 48.56, budget1);
+    Expense EXPENSE_2 = new Expense("exp2", "description2", 10.86, budget1);
+    Expense EXPENSE_3 = new Expense("exp3", "description3", 98.32, budget1);
 
-    User user2 = new User();
-    Budget budget2 = new Budget();
-    Expense EXPENSE_2 = new Expense("food", "description 2", 21.68, user2, budget2);
+
+//    User user2 = new User();
+//    Budget budget2 = new Budget();
+//    Expense EXPENSE_2 = new Expense("food", "description 2", 21.68, user2, budget2);
 
 
 
@@ -71,10 +70,10 @@ public class ExpenseControllerTest {
     //GET ALL
     @Test
     public void getExpenses_success() throws Exception {
-        List<Expense> expenses = new ArrayList<>(Arrays.asList(EXPENSE_1, EXPENSE_2, EXPENSE_3, EXPENSE_4));
+        List<Expense> expenses = new ArrayList<>(Arrays.asList(EXPENSE_1, EXPENSE_2, EXPENSE_3));
         when(expenseService.getExpenses(budget1.getId())).thenReturn(expenses);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/budgets/{budgetId}/expenses", budget1) //TODO enter the correct ID to budget1
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/budgets/{budgetId}/expenses", budget1.getId()) //TODO enter the correct ID to budget1
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data",hasSize(3))) //$ is a placeholder for jsonpath, so here we want to get the payload data
