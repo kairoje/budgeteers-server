@@ -41,7 +41,12 @@ public class BudgetService extends ApplicationService {
      */
     public List<Budget> getBudgets() { return currentUser().getBudgets(); }
 
-
+    /**
+     * Retrieves a specific budget by its unique identifier (UUID).
+     *
+     * @param budgetId The UUID of the budget to retrieve.
+     * @return The budget object with the given UUID, or throws an exception if not found.
+     */
     public Budget getBudget(UUID budgetId) { return budgetRepository.findById(budgetId).orElseThrow(); }
 
     public Budget createBudget(Budget budgetObject) {
