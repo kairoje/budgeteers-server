@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class BudgetServiceTest {
@@ -65,5 +67,16 @@ class BudgetServiceTest {
         List<Budget> budgets = this.budgetService.getBudgets();
         assertEquals(2, budgets.size());
     }
+
+    @Test
+    void getOneBudget() {
+        Mockito.when(budgetService.getBudget(UUID.randomUUID())).thenReturn(getMockBudgets().get(0));
+    }
+
+    @Test
+    void createABudget() {
+        Mockito.when(budgetService.createBudget(any(Budget.class))).thenReturn(getMockBudgets().get(0));
+    }
+
 
 }
