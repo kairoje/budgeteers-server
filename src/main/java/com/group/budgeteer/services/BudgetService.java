@@ -74,5 +74,11 @@ public class BudgetService extends ApplicationService {
         return budgetRepository.save(budget.update(budgetObject));
     }
 
+
+    /**
+     * Deletes a budget by its unique identifier (UUID).
+     *
+     * @param budgetId The UUID of the budget to be deleted.
+     */
     public void deleteBudget(UUID budgetId) { budgetRepository.deleteById(budgetId); }
 }
