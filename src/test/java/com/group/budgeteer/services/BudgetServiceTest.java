@@ -19,10 +19,10 @@ import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 class BudgetServiceTest {
-    
+
     @Mock
     private  BudgetRepository budgetRepository;
-    
+
     @Mock
     private BudgetService budgetService;
 
