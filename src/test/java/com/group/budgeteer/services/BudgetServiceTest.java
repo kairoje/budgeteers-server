@@ -78,5 +78,14 @@ class BudgetServiceTest {
         Mockito.when(budgetService.createBudget(any(Budget.class))).thenReturn(getMockBudgets().get(0));
     }
 
+    @Test
+    void updateBudget() {
+        Budget originalBudget = getMockBudgets().get(0);
+        Budget updatedBudget = new Budget();
+        updatedBudget.setId(originalBudget.getId());
+        updatedBudget.setBalance(7500.00);
+        Mockito.when(budgetRepository.save(updatedBudget)).thenReturn(updatedBudget);
+    }
+
 
 }
