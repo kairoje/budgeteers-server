@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 /**
  * The Expense class represents an expense by User in the application.
@@ -41,22 +42,14 @@ public class Expense extends ApplicationEntity<Expense> {
     @NotNull(message = "Expense price cannot be blank")
     @Min(1)
     private double price;
-
-    /**
-     * Join the Expense model to the User model.
-     */
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @Override
-    public Expense update(Expense payload) {
-      setName(payload.getName());
-      setPrice(payload.getPrice());
-      setDescription(payload.getDescription());
-      return this;
-    }
+//
+//    /**
+//     * Join the Expense model to the User model.
+//     */
+//    @ManyToOne
+//    @JsonIgnore
+//    @JoinColumn(name = "user_id", nullable = false)
+//    private User user;
 
     /**
      * Join the Expense model to the Budgets model.
@@ -65,4 +58,23 @@ public class Expense extends ApplicationEntity<Expense> {
     @JsonIgnore
     @JoinColumn(name = "budget_id", nullable = false)
     private Budget budget;
+
+    public Expense(UUID id, String name, String description, double price, Budget budget) {
+        super(id);
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.budget = budget;
+    }
+
+    @Override
+    public Expense update(Expense payload) {
+        setName(payload.getName());
+        setPrice(payload.getPrice());
+        setDescription(payload.getDescription());
+        return this;
+    }
+
+    public void setUser(User user) { //had to create this method since we removed the association b/w User and Expense model
+    }
 }

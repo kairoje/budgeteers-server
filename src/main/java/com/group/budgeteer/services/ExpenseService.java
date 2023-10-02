@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -50,30 +49,37 @@ public class ExpenseService extends ApplicationService {
     }
 
     //POST/CREATE
+    //TODO Refactor as necessary
     public Expense createExpense(UUID budgetId, Expense expenseObject) {
         Budget budget = budgetRepository.findById(budgetId).orElseThrow();
-        expenseObject.setBudget(budget);
-        expenseObject.setUser(currentUser());
         budget.setBalance(budget.getBalance() - expenseObject.getPrice()); //TODO add validation for if balance is under $0
+        expenseObject.setBudget(budget);
         budgetRepository.save(budget);
         return expenseRepository.save(expenseObject);
 
     }
-    public void deleteExpense(UUID expenseId){
+    public Expense deleteExpense(UUID expenseId){
         Expense expense = expenseRepository.findById(expenseId).orElseThrow();
         Budget budget = expense.getBudget();
         budget.setBalance(budget.getBalance() + expense.getPrice());
         budgetRepository.save(budget);
         expenseRepository.delete(expense);
 
+        return expense;
     }
 
     //PUT/UPDATE
-//    public Expense updateExpense(@PathVariable String budgetId, @PathVariable String expenseId, Expense expenseObject) {
-//
-//
-//    }
+    public Expense updateExpense(Expense expenseObject) {
+        Expense existingExpense = expenseRepository.findById(expenseObject.getId()).orElseThrow();
+        Budget existingBudget = existingExpense.getBudget();
+        if (existingExpense.getPrice() > expenseObject.getPrice()) {
+            existingBudget.setBalance(existingBudget.getBalance() + (existingExpense.getPrice() - expenseObject.getPrice()));
+        } else if (existingExpense.getPrice() < expenseObject.getPrice()) {
+            existingBudget.setBalance(existingBudget.getBalance() - (expenseObject.getPrice() - existingExpense.getPrice()) );
+        }
+        budgetRepository.save(existingBudget);
+        return expenseRepository.save(expenseObject);
+    }
 }
 
-//TODO DELETE
 //TODO add docstrings
