@@ -9,9 +9,12 @@ import com.group.budgeteer.services.ExpenseService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -23,13 +26,16 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ExpenseController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@WithMockUser(roles = "ADMIN")
 public class ExpenseControllerTest {
 
     @Autowired
@@ -52,7 +58,7 @@ public class ExpenseControllerTest {
     //HELLO WORLD
     @Test
     public void shouldReturnHelloWorld_success() throws Exception {
-        mockMvc.perform(get("/api/hello-world/"))
+        mockMvc.perform(get("/api/v1/hello-world"))
                 .andExpect(MockMvcResultMatchers.content().string("hello World")) //bc dealing with a string, expects content of hello World, CASE SENSITIVE
                 .andExpect(status().isOk()) //expect ok status
                 .andDo(print());
@@ -135,7 +141,7 @@ public class ExpenseControllerTest {
     @Test
     void deleteExpense_success() throws Exception {
         when(expenseService.deleteExpense(EXPENSE_1.getId()).thenReturn(EXPENSE_1));
-        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/expenses/{expenseId}", UUID) //whatever expense 1 UUID is
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/expenses/{expenseId}", UUID)
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(mockRequest)
