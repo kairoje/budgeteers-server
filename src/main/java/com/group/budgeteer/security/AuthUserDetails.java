@@ -1,7 +1,6 @@
 package com.group.budgeteer.security;
 
 import com.group.budgeteer.models.User;
-import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

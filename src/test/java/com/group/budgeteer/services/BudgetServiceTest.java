@@ -4,15 +4,9 @@ import com.group.budgeteer.models.Budget;
 import com.group.budgeteer.models.User;
 import com.group.budgeteer.repositories.BudgetRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -22,7 +16,6 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class BudgetServiceTest {
@@ -87,5 +80,10 @@ class BudgetServiceTest {
         Mockito.when(budgetRepository.save(updatedBudget)).thenReturn(updatedBudget);
     }
 
+    @Test
+    void deleteABudget() {
+        Budget budgetToDelete = getMockBudgets().get(0);
+        budgetService.deleteBudget(budgetToDelete.getId());
+    }
 
 }
