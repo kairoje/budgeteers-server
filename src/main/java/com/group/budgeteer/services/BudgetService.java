@@ -49,6 +49,12 @@ public class BudgetService extends ApplicationService {
      */
     public Budget getBudget(UUID budgetId) { return budgetRepository.findById(budgetId).orElseThrow(); }
 
+    /**
+     * Creates a new budget.
+     *
+     * @param budgetObject The budget object to be created.
+     * @return The created budget object after saving it to the repository.
+     */
     public Budget createBudget(Budget budgetObject) {
         logger.info("Creating Budget");
         budgetObject.setUser(currentUser());
