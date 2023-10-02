@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+/**
+ * Service class for managing budget CRUD operations.
+ */
 @Service
 public class BudgetService extends ApplicationService {
 
