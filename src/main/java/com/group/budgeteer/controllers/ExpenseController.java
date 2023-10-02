@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  * It provides endpoints to perform various CRUD operations.
  */
 @RestController
-@RequestMapping(path = "/api/v1")
+@RequestMapping(path = "/api/v1/budgets")
 public class ExpenseController {
     Logger logger = Logger.getLogger(ExpenseController.class.getName());
 
@@ -45,7 +45,7 @@ public class ExpenseController {
     }
 
     //GET ALL
-    @GetMapping(path = "/api/v1/budgets/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/1/expenses
+    @GetMapping(path = "/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/1/expenses
     public ResponseEntity<?> getExpenses(@PathVariable(value = "budgetId") UUID budgetId) {
         List<Expense> expenses = expenseService.getExpenses(budgetId);
         if (expenses.isEmpty()) {
@@ -57,13 +57,9 @@ public class ExpenseController {
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
     }
-//    public List<Expense> getExpenses(@PathVariable UUID budgetId){
-//        List<Expense> expenseList = expenseService.getExpenses(budgetId);
-//        return expenseService.getExpenses(budgetId);
-//    }
 
     //GET ONE
-    @GetMapping(path = "/api/v1/budgets/{budgetId}/expenses/{expenseId}") //http://localhost:4000/api/v1/budgets/1/expenses/1
+    @GetMapping(path = "/{budgetId}/expenses/{expenseId}") //http://localhost:4000/api/v1/budgets/1/expenses/1
     public ResponseEntity<?> getExpense(@PathVariable(value = "budgetId") UUID budgetId, @PathVariable(value = "expenseId") UUID expenseId) {
         Expense expense = expenseService.getExpense(budgetId, expenseId);
         if (expense != null) {
@@ -75,12 +71,9 @@ public class ExpenseController {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
     }
-//    public Expense getExpense(@PathVariable(value = "budgetId") UUID budgetId, @PathVariable(value = "expenseId") UUID expenseId){
-//        return expenseService.getExpense(budgetId, expenseId);
-//    }
 
     //POST/CREATE
-    @PostMapping(path = "/api/v1/budgets/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/{budgetId}/expenses
+    @PostMapping(path = "/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/{budgetId}/expenses
     public ResponseEntity<?> createExpense(@PathVariable(value = "budgetId") UUID budgetId, @RequestBody Expense expenseObject) {
         Expense newExpense = expenseService.createExpense(budgetId, expenseObject);
         if (newExpense != null) {
@@ -92,11 +85,8 @@ public class ExpenseController {
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
     }
-//    public Expense createExpense(@PathVariable(value = "budgetId") UUID budgetId, @RequestBody Expense expenseObject) {
-//        return expenseService.createExpense(budgetId, expenseObject);
-//    }
 
-    @PutMapping(path = "/api/v1/budgets/{budgetId}/expenses/{expenseId}")
+    @PutMapping(path = "/{budgetId}/expenses/{expenseId}")
     public ResponseEntity<?> updateExpense(@PathVariable(value = "budgetId") UUID budgetId, @PathVariable(value = "expenseId") UUID expenseId, @RequestBody Expense expenseObject) {
         Expense expenseToUpdate = expenseService.updateExpense(budgetId, expenseId, expenseObject);
         if (expenseToUpdate == null) {
@@ -108,9 +98,6 @@ public class ExpenseController {
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
     }
-//    public Expense updateExpense(@PathVariable UUID budgetId, @PathVariable UUID expenseId, @RequestBody Expense expenseObject){
-//        return expenseService.updateExpense(budgetId, expenseId, expenseObject);
-//    }
 
     @DeleteMapping(path="/expenses/{expenseId}")
     public ResponseEntity<APIResponse<Void>> deleteExpense(@PathVariable(value = "expenseId") UUID id ){
