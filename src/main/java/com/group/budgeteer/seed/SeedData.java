@@ -1,5 +1,5 @@
 package com.group.budgeteer.seed;
 
-public class BudgetData {
+public class SeedData {
 
 }
