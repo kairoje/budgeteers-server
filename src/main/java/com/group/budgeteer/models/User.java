@@ -24,6 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 public class User extends ApplicationEntity<User> {
     /**
      * The email for user

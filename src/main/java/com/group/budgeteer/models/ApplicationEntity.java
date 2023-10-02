@@ -16,6 +16,7 @@ import java.util.UUID;
  * @param <T> The type of payload that can be used to update this entity.
  */
 @MappedSuperclass
+@Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

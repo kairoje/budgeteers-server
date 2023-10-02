@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * The ApplicationService class provides common utility methods for accessing information about the current user
- * within the library application.
+ * within the budgeteer application.
  */
 @Service
 public class ApplicationService {

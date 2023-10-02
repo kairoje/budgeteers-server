@@ -81,7 +81,6 @@ public class AuthUserDetails implements UserDetails {
         return true;
     }
 
-    public User getUser() {
-        return user;
-    }
+    public User getUser() { return user; }
+
 }

@@ -46,8 +46,8 @@ public class BudgetController {
                 .ok(new APIResponse<>(budgetService.updateBudget(budgetObject), "success"));
     }
 
-    @PutMapping("/{budgetId}")
-    public ResponseEntity<APIResponse<APIResponse<Void>>> updateBudget(@PathVariable(value = "budgetId") UUID id) {
+    @DeleteMapping("/{budgetId}")
+    public ResponseEntity<APIResponse<APIResponse<Void>>> deleteBudget(@PathVariable(value = "budgetId") UUID id) {
         budgetService.deleteBudget(id);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
