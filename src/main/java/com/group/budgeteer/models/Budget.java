@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -58,6 +59,13 @@ public class Budget extends ApplicationEntity<Budget> {
     @OneToMany(mappedBy = "budget", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Expense> expenses;
+
+    public Budget(UUID id, Double balance, LocalDate date, User user) {
+        super(id);
+        this.balance = balance;
+        this.date = date;
+        this.user = user;
+    }
 
     @Override
    public Budget update(Budget payload) {
