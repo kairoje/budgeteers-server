@@ -1,17 +1,12 @@
 package com.group.budgeteer.services;
 
-import com.group.budgeteer.models.ApplicationEntity;
 import com.group.budgeteer.models.Budget;
-import com.group.budgeteer.models.User;
 import com.group.budgeteer.repositories.BudgetRepository;
 import com.group.budgeteer.repositories.ExpenseRepository;
-import com.group.budgeteer.security.AuthUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
