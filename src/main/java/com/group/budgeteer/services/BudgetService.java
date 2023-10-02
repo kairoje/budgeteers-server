@@ -22,13 +22,23 @@ public class BudgetService extends ApplicationService {
 
     Logger logger = Logger.getLogger(BudgetService.class.getName()); //log messages related to the class
 
+    /**
+     * Constructor for BudgetService, adds instances of budget and expense repository to access & manipulate respective data.
+     *
+     * @param budgetRepository  The repository for managing budget data.
+     * @param expenseRepository The repository for managing expense data.
+     */
     @Autowired
     public BudgetService(BudgetRepository budgetRepository, ExpenseRepository expenseRepository) {
         this.budgetRepository = budgetRepository;
         this.expenseRepository = expenseRepository;
     }
 
-
+    /**
+     * Retrieves a list of budgets associated with the current user.
+     *
+     * @return A list of budgets belonging to the current user.
+     */
     public List<Budget> getBudgets() { return currentUser().getBudgets(); }
 
 
