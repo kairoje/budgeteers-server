@@ -58,20 +58,6 @@ public class ExpenseController {
         }
     }
 
-    //GET ONE
-    @GetMapping(path = "/{budgetId}/expenses/{expenseId}") //http://localhost:4000/api/v1/budgets/1/expenses/1
-    public ResponseEntity<?> getExpense(@PathVariable(value = "budgetId") UUID budgetId, @PathVariable(value = "expenseId") UUID expenseId) {
-        Expense expense = expenseService.getExpense(budgetId, expenseId);
-        if (expense != null) {
-            message.put("message", "success");
-            message.put("data", expense);
-            return new ResponseEntity<>(message, HttpStatus.OK);
-        } else {
-            message.put("message", "cannot find expense with id " + expenseId);
-            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
-        }
-    }
-
     //POST/CREATE
     @PostMapping(path = "/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/{budgetId}/expenses
     public ResponseEntity<?> createExpense(@PathVariable(value = "budgetId") UUID budgetId, @RequestBody Expense expenseObject) {
@@ -86,11 +72,12 @@ public class ExpenseController {
         }
     }
 
-    @PutMapping(path = "/{budgetId}/expenses/{expenseId}")
-    public ResponseEntity<?> updateExpense(@PathVariable(value = "budgetId") UUID budgetId, @PathVariable(value = "expenseId") UUID expenseId, @RequestBody Expense expenseObject) {
-        Expense expenseToUpdate = expenseService.updateExpense(budgetId, expenseId, expenseObject);
+    //UPDATE
+    @PutMapping(path = "/expenses")
+    public ResponseEntity<?> updateExpense(@RequestBody Expense expenseObject) {
+        Expense expenseToUpdate = expenseService.updateExpense(expenseObject);
         if (expenseToUpdate == null) {
-            message.put("message", "cannot find expense with id " + expenseId);
+            message.put("message", "cannot find expense with id " + expenseObject.getId());
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         } else {
             message.put("message", "success");
