@@ -1,8 +1,10 @@
 package com.group.budgeteer.controllers;
 
+import com.group.budgeteer.classes.APIResponse;
 import com.group.budgeteer.models.Expense;
 import com.group.budgeteer.services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,19 +32,19 @@ public class ExpenseController {
     }
 
     //GET ALL
-    @GetMapping(path = "/api/v1/budgets/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/1/expenses
+    @GetMapping(path = "/budgets/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/1/expenses
     public List<Expense> getExpenses(@PathVariable UUID budgetId){
         return expenseService.getExpenses(budgetId);
     }
 
     //GET ONE
-    @GetMapping(path = "/api/v1/budgets/{budgetId}/expenses/{expenseId}") //http://localhost:4000/api/v1/budgets/1/expenses/1
+    @GetMapping(path = "/budgets/{budgetId}/expenses/{expenseId}") //http://localhost:4000/api/v1/budgets/1/expenses/1
     public Expense getExpense(@PathVariable(value = "budgetId") UUID budgetId, @PathVariable(value = "expenseId") UUID expenseId){
         return expenseService.getExpense(budgetId, expenseId);
     }
 
     //POST/CREATE
-    @PostMapping(path = "/api/v1/budgets/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/{budgetId}/expenses
+    @PostMapping(path = "/budgets/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/{budgetId}/expenses
     public Expense createExpense(@PathVariable(value = "budgetId") UUID budgetId, @RequestBody Expense expenseObject) {
         return expenseService.createExpense(budgetId, expenseObject);
     }
@@ -51,6 +53,13 @@ public class ExpenseController {
 //    public Expense updateExpense(@PathVariable String budgetId, @PathVariable String expenseId, Expense expenseObject){
 //        return expenseService.updateExpense(budgetId, expenseId, expenseObject);
 //    }
+
+    @DeleteMapping(path="/expenses/{expenseId}")
+    public ResponseEntity<APIResponse<Void>> deleteExpense(@PathVariable(value = "expenseId") UUID id ){
+        expenseService.deleteExpense(id);
+        return ResponseEntity
+                .ok(new APIResponse<>(null, "success"));
+    }
 }
 
 //TODO add docstring
