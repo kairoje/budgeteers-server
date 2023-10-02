@@ -61,9 +61,14 @@ public class BudgetService extends ApplicationService {
         logger.info("Setting User");
         logger.info(budgetObject.toString());
         return budgetRepository.save(budgetObject);
-
     }
 
+    /**
+     * Updates an existing budget with new information.
+     *
+     * @param budgetObject The updated budget object containing new data.
+     * @return The updated budget object after saving it to the repository.
+     */
     public Budget updateBudget(Budget budgetObject) {
         Budget budget = budgetRepository.findById(budgetObject.getId()).orElseThrow();
         return budgetRepository.save(budget.update(budgetObject));
