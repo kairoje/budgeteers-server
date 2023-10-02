@@ -58,27 +58,28 @@ public class ExpenseService extends ApplicationService {
         return expenseRepository.save(expenseObject);
 
     }
-    public Expense deleteExpense(UUID expenseId){
+
+    public void deleteExpense(UUID expenseId){
         Expense expense = expenseRepository.findById(expenseId).orElseThrow();
         Budget budget = expense.getBudget();
         budget.setBalance(budget.getBalance() + expense.getPrice());
         budgetRepository.save(budget);
         expenseRepository.delete(expense);
 
-        return expense;
     }
 
     //PUT/UPDATE
     public Expense updateExpense(Expense expenseObject) {
         Expense existingExpense = expenseRepository.findById(expenseObject.getId()).orElseThrow();
-        Budget existingBudget = existingExpense.getBudget();
-        if (existingExpense.getPrice() > expenseObject.getPrice()) {
-            existingBudget.setBalance(existingBudget.getBalance() + (existingExpense.getPrice() - expenseObject.getPrice()));
+        Budget budget = existingExpense.getBudget();
+        if (expenseObject.getPrice() < existingExpense.getPrice()) {
+            budget.setBalance(budget.getBalance() + (existingExpense.getPrice() - expenseObject.getPrice()));
         } else if (existingExpense.getPrice() < expenseObject.getPrice()) {
-            existingBudget.setBalance(existingBudget.getBalance() - (expenseObject.getPrice() - existingExpense.getPrice()) );
+            budget.setBalance(budget.getBalance() - (expenseObject.getPrice() - existingExpense.getPrice()));
         }
-        budgetRepository.save(existingBudget);
-        return expenseRepository.save(expenseObject);
+        budgetRepository.save(budget);
+        existingExpense.update(expenseObject);
+        return expenseRepository.save(existingExpense);
     }
 }
 

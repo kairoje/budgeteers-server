@@ -23,7 +23,6 @@ import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -99,11 +98,11 @@ public class ExpenseControllerTest {
                 .andDo(print());
     }
 
-    @Test //TODO debug
+    @Test
     public void updateExpense_success() throws Exception {
+        UUID expenseID = EXPENSE_1.getId();
 
-
-        Expense updatedExpense = new Expense(EXPENSE_1.getId(), "exp4", "description3", 98.32, budget1);
+        Expense updatedExpense = new Expense(expenseID, "exp1", "description3", 98.32, budget1);
 
         when(expenseService.updateExpense(Mockito.any(Expense.class))).thenReturn(updatedExpense);
         MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/api/v1/budgets/expenses")
@@ -114,7 +113,7 @@ public class ExpenseControllerTest {
         mockMvc.perform(mockRequest)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.data.id").value(updatedExpense.getId()))
+                .andExpect(jsonPath("$.data.id").value(expenseID.toString()))
                 .andExpect(jsonPath("$.data.name").value(updatedExpense.getName()))
                 .andExpect(jsonPath("$.data.price").value(updatedExpense.getPrice()))
                 .andExpect(jsonPath("$.data.description").value(updatedExpense.getDescription()))
@@ -122,22 +121,12 @@ public class ExpenseControllerTest {
                 .andDo(print());
     }
 
-    //TODO debug
     @Test
     void deleteExpense_success() throws Exception {
-        when(expenseService.deleteExpense(EXPENSE_1.getId())).thenReturn(EXPENSE_1);
-        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/api/v1/budgets/expenses/{expenseId}", EXPENSE_1.getId())
-                .contentType(MediaType.APPLICATION_JSON);
-
-        mockMvc.perform(mockRequest)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.data.id").value(EXPENSE_1.getId()))
-                .andExpect(jsonPath("$.data.name").value(EXPENSE_1.getName()))
-                .andExpect(jsonPath("$.data.description").value(EXPENSE_1.getDescription()))
-                .andExpect(jsonPath("$.message").value("success"))
-                .andDo(print());
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/api/v1/budgets/expenses/{expenseId}", EXPENSE_1.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+        Mockito.verify(expenseService).deleteExpense(EXPENSE_1.getId());
     }
 }
-
-//TODO add docstring

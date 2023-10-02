@@ -74,23 +74,15 @@ public class ExpenseController {
 
     //UPDATE
     @PutMapping(path = "/expenses")
-    public ResponseEntity<?> updateExpense(@RequestBody Expense expenseObject) {
-        Expense expenseToUpdate = expenseService.updateExpense(expenseObject);
-        if (expenseToUpdate == null) {
-            message.put("message", "cannot find expense with id " + expenseObject.getId());
-            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
-        } else {
-            message.put("message", "success");
-            message.put("data", expenseToUpdate.getUpdatedAt());
-            return new ResponseEntity<>(message, HttpStatus.OK);
-        }
+    public ResponseEntity<APIResponse<Expense>> updateExpense(@RequestBody Expense expenseObject) {
+        return ResponseEntity.ok(new APIResponse<>(expenseService.updateExpense(expenseObject), "success"));
     }
 
     @DeleteMapping(path="/expenses/{expenseId}")
     public ResponseEntity<APIResponse<Void>> deleteExpense(@PathVariable(value = "expenseId") UUID id ){
         expenseService.deleteExpense(id);
         return ResponseEntity
-                .ok(new APIResponse<>(null, "success"));
+                .noContent().build();
     }
 }
 
