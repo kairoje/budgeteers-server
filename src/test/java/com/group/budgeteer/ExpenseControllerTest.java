@@ -6,6 +6,7 @@ import com.group.budgeteer.models.Budget;
 import com.group.budgeteer.models.Expense;
 import com.group.budgeteer.models.User;
 import com.group.budgeteer.services.ExpenseService;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
