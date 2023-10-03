@@ -8,22 +8,3 @@ package com.group.budgeteer.classes;
  * @param message The status message of the response
  */
 public record APIResponse<T>(T data, String message) { }
-
-//record is the same as this
-//public class APIResponse<T> {
-//    private final T data;
-//    private final String message;
-//
-//    public APIResponse(T data, String message){
-//        this.data = data;
-//        this.message = message;
-//    }
-//
-//    public T getData() {
-//        return data;
-//    }
-//
-//    public String getMessage() {
-//        return message;
-//    }
-//}
