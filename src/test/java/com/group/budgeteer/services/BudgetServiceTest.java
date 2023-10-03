@@ -6,6 +6,7 @@ import com.group.budgeteer.repositories.BudgetRepository;
 import com.group.budgeteer.security.AuthUserDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -70,6 +71,27 @@ class BudgetServiceTest {
         // Verify that no more interactions with the repository occurred
         verifyNoMoreInteractions(budgetRepository);
     }
+
+    @Test
+    void testCreateBudget() {
+        //given
+        Budget budget = new Budget(
+                4000.00,
+                LocalDate.of(2023, 3, 1),
+                authUserDetails.getUser(),
+                null
+        );
+        // when
+        budgetService.createBudget(budget);
+
+        // then
+        ArgumentCaptor<Budget> budgetArgument = ArgumentCaptor.forClass(Budget.class);
+        verify(budgetRepository).save(budgetArgument.capture());
+        Budget capturedBudget = budgetArgument.getValue();
+        assertEquals(capturedBudget, budget);
+        verifyNoMoreInteractions(budgetRepository);
+    }
+
 
 
 }
