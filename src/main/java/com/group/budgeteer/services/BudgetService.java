@@ -21,8 +21,6 @@ public class BudgetService extends ApplicationService {
 
     private final ExpenseRepository expenseRepository;
 
-    Logger logger = Logger.getLogger(BudgetService.class.getName()); //log messages related to the class
-
     /**
      * Constructor for BudgetService, adds instances of budget and expense repository to access & manipulate respective data.
      *
