@@ -1,5 +1,6 @@
 package com.group.budgeteer.services;
 
+import com.group.budgeteer.exceptions.DoesNotExistException;
 import com.group.budgeteer.models.Budget;
 import com.group.budgeteer.models.Expense;
 import com.group.budgeteer.repositories.BudgetRepository;
@@ -51,7 +52,9 @@ public class ExpenseService extends ApplicationService {
     //POST/CREATE
     //TODO Refactor as necessary
     public Expense createExpense(UUID budgetId, Expense expenseObject) {
-        Budget budget = budgetRepository.findById(budgetId).orElseThrow();
+        Budget budget = budgetRepository.findById(budgetId).orElseThrow(
+                () -> new DoesNotExistException(Budget.class, budgetId)
+        );
         budget.setBalance(budget.getBalance() - expenseObject.getPrice()); //TODO add validation for if balance is under $0
         expenseObject.setBudget(budget);
         budgetRepository.save(budget);
@@ -59,7 +62,9 @@ public class ExpenseService extends ApplicationService {
 
     }
     public Expense deleteExpense(UUID expenseId){
-        Expense expense = expenseRepository.findById(expenseId).orElseThrow();
+        Expense expense = expenseRepository.findById(expenseId).orElseThrow(
+                () -> new DoesNotExistException(Expense.class, expenseId)
+        );
         Budget budget = expense.getBudget();
         budget.setBalance(budget.getBalance() + expense.getPrice());
         budgetRepository.save(budget);
@@ -70,7 +75,9 @@ public class ExpenseService extends ApplicationService {
 
     //PUT/UPDATE
     public Expense updateExpense(Expense expenseObject) {
-        Expense existingExpense = expenseRepository.findById(expenseObject.getId()).orElseThrow();
+        Expense existingExpense = expenseRepository.findById(expenseObject.getId()).orElseThrow(
+                () -> new DoesNotExistException(Expense.class, expenseObject.getId())
+        );
         Budget existingBudget = existingExpense.getBudget();
         if (existingExpense.getPrice() > expenseObject.getPrice()) {
             existingBudget.setBalance(existingBudget.getBalance() + (existingExpense.getPrice() - expenseObject.getPrice()));

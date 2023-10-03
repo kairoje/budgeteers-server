@@ -1,5 +1,7 @@
 package com.group.budgeteer.services;
 
+import com.group.budgeteer.controllers.BudgetController;
+import com.group.budgeteer.exceptions.DoesNotExistException;
 import com.group.budgeteer.models.Budget;
 import com.group.budgeteer.repositories.BudgetRepository;
 import com.group.budgeteer.repositories.ExpenseRepository;
@@ -47,7 +49,9 @@ public class BudgetService extends ApplicationService {
      * @param budgetId The UUID of the budget to retrieve.
      * @return The budget object with the given UUID, or throws an exception if not found.
      */
-    public Budget getBudget(UUID budgetId) { return budgetRepository.findById(budgetId).orElseThrow(); }
+    public Budget getBudget(UUID budgetId) { return budgetRepository.findById(budgetId).orElseThrow(
+            () -> new DoesNotExistException(Budget.class, budgetId)
+    ); }
 
     /**
      * Creates a new budget.
@@ -56,10 +60,7 @@ public class BudgetService extends ApplicationService {
      * @return The created budget object after saving it to the repository.
      */
     public Budget createBudget(Budget budgetObject) {
-        logger.info("Creating Budget");
         budgetObject.setUser(currentUser());
-        logger.info("Setting User");
-        logger.info(budgetObject.toString());
         return budgetRepository.save(budgetObject);
     }
 
@@ -70,7 +71,9 @@ public class BudgetService extends ApplicationService {
      * @return The updated budget object after saving it to the repository.
      */
     public Budget updateBudget(Budget budgetObject) {
-        Budget budget = budgetRepository.findById(budgetObject.getId()).orElseThrow();
+        Budget budget = budgetRepository.findById(budgetObject.getId()).orElseThrow(
+                () -> new DoesNotExistException(Budget.class, budgetObject.getId())
+        );
         return budgetRepository.save(budget.update(budgetObject));
     }
 
