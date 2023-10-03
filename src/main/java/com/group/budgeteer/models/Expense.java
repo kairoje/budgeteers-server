@@ -42,14 +42,6 @@ public class Expense extends ApplicationEntity<Expense> {
     @NotNull(message = "Expense price cannot be blank")
     @Min(1)
     private double price;
-//
-//    /**
-//     * Join the Expense model to the User model.
-//     */
-//    @ManyToOne
-//    @JsonIgnore
-//    @JoinColumn(name = "user_id", nullable = false)
-//    private User user;
 
     /**
      * Join the Expense model to the Budgets model.
@@ -82,7 +74,4 @@ public class Expense extends ApplicationEntity<Expense> {
         setDescription(payload.getDescription());
         return this;
     }
-//
-//    public void setUser(User user) { //had to create this method since we removed the association b/w User and Expense model
-//    }
 }
