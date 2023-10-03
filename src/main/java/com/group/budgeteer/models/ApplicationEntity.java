@@ -50,5 +50,9 @@ public abstract class ApplicationEntity<T> {
     @LastModifiedDate
     private Date updatedAt;
 
-    abstract T update( T payload);
+    public ApplicationEntity(UUID id) {
+        this.id = id;
+    }
+
+    abstract T update(T payload);
 }

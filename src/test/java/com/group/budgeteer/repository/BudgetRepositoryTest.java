@@ -4,8 +4,6 @@ import com.group.budgeteer.models.Budget;
 import com.group.budgeteer.models.User;
 import com.group.budgeteer.repositories.BudgetRepository;
 import com.group.budgeteer.repositories.UserRepository;
-import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -15,7 +13,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.time.LocalDate;
 import java.time.Month;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
@@ -27,7 +26,8 @@ public class BudgetRepositoryTest {
     @Autowired
     UserRepository userRepository;
 
-    User user = new User("sampleuser@example.com", "John", "Doe", "password123", null, null);
+//    User user = new User("sampleuser@example.com", "John", "Doe", "password123", null, null);
+User user = new User();
 
     LocalDate date = LocalDate.of(2023, Month.OCTOBER, 1);
 

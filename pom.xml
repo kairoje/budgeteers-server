@@ -102,8 +102,8 @@
 		<artifactId>mockito-core</artifactId>
 		<version>3.12.4</version>
 		<scope>test</scope>
-		</dependency>
 
+	</dependency>
 		<dependency>
 			<groupId>org.junit.platform</groupId>
 			<artifactId>junit-platform-runner</artifactId>
@@ -116,7 +116,6 @@
 			<artifactId>junit-jupiter-api</artifactId>
 			<version>5.8.2</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
