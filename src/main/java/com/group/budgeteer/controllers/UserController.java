@@ -34,8 +34,8 @@ public class UserController {
                 .ok(new APIResponse<>(userService.login(userObject), "success"));
     }
 
-    @GetMapping
-    public List<User> test(){
-        return userService.test();
-    }
+//    @GetMapping
+//    public List<User> test(){
+//        return userService.test();
+//    }
 }
