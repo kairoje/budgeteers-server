@@ -119,4 +119,13 @@ class BudgetControllerTest {
                 .andExpect(jsonPath("$.data.date[1]").value(9))  // Month
                 .andExpect(jsonPath("$.data.date[2]").value(1));
     }
+
+    @Test
+    void deleteBudget_success() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/api/v1/budgets/{id}", bud1.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+        verify(budgetService).deleteBudget(bud1.getId());
+    }
 }
