@@ -37,21 +37,16 @@ public class UserService extends ApplicationService{
         this.authenticationManager = authenticationManager;
     }
 
-    public String create(User userObject){
+    public String create(User userObject) throws UserAlreadyExistsException {
         boolean exists = userRepository.existsByEmail(userObject.getEmail());
-
-        if (exists){
-            throw new UserAlreadyExistsException("User with email " + userObject.getEmail() + " already exists.");
-        }
-
+        if (exists) throw new UserAlreadyExistsException("User already exist with id: " + userObject.getId());
         userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
         String jwt = jwtUtils.generateJwtToken(new AuthUserDetails(userObject));
         userRepository.save(userObject);
-
         return jwt;
     }
 
-    public User login(User payload) {
+    public User login(User payload)  {
         UsernamePasswordAuthenticationToken authenticationToken = new
                 UsernamePasswordAuthenticationToken(payload.getEmail(), payload.getPassword());
         try {
