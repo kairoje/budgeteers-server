@@ -65,7 +65,7 @@ class ExpenseServiceTest {
         );
 
         // Stub the behavior of expenseRepository to return the expected expenses
-        when(expenseRepository.findByBudget_Id(budgetId)).thenReturn(expectedExpenses);
+        when(expenseRepository.findByBudget_Id(budgetId)).thenReturn(Optional.of(expectedExpenses));
 
         // Call the method to be tested
         List<Expense> retrievedExpenses = expenseService.getExpenses(budgetId);
