@@ -6,7 +6,6 @@ import com.group.budgeteer.repositories.BudgetRepository;
 import com.group.budgeteer.repositories.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,40 +34,36 @@ public class ExpenseService extends ApplicationService {
         this.budgetRepository = budgetRepository;
     }
 
-
-    //GET ALL
+    /**
+     * Retrieves a list of expenses associated with the specified budget UUID.
+     *
+     * @param budgetId The unique identifier (UUID) of the budget for which expenses are to be retrieved.
+     * @return A list of expenses associated with the specified budget.
+     */
     public List<Expense> getExpenses(UUID budgetId) {
         return expenseRepository.findAllById(budgetId);
     }
 
-    //GET ONE
-    public Expense getExpense(UUID budgetId, UUID expenseId) {
-        Budget budget = budgetRepository.findById(budgetId).orElseThrow();
-
-        return expenseRepository.findById(expenseId).orElseThrow();
-    }
-
-    //POST/CREATE
-    //TODO Refactor as necessary
+    /**
+     * Creates an expense associated with the specified budget UUID.
+     * @param budgetId The unique identifier (UUID) of the budget for which expenses are to be retrieved.
+     * @param expenseObject The expense object containing details of the new expense.
+     * @return The expense object that was created.
+     */
     public Expense createExpense(UUID budgetId, Expense expenseObject) {
         Budget budget = budgetRepository.findById(budgetId).orElseThrow();
-        budget.setBalance(budget.getBalance() - expenseObject.getPrice()); //TODO add validation for if balance is under $0
+        budget.setBalance(budget.getBalance() - expenseObject.getPrice());
         expenseObject.setBudget(budget);
         budgetRepository.save(budget);
         return expenseRepository.save(expenseObject);
 
     }
 
-    public void deleteExpense(UUID expenseId){
-        Expense expense = expenseRepository.findById(expenseId).orElseThrow();
-        Budget budget = expense.getBudget();
-        budget.setBalance(budget.getBalance() + expense.getPrice());
-        budgetRepository.save(budget);
-        expenseRepository.delete(expense);
-
-    }
-
-    //PUT/UPDATE
+    /**
+     * Updates the specified expense object.
+     * @param expenseObject The expense object containing details of the expense to be updated.
+     * @return The updated expense object.
+     */
     public Expense updateExpense(Expense expenseObject) {
         Expense existingExpense = expenseRepository.findById(expenseObject.getId()).orElseThrow();
         Budget budget = existingExpense.getBudget();
@@ -81,6 +76,17 @@ public class ExpenseService extends ApplicationService {
         existingExpense.update(expenseObject);
         return expenseRepository.save(existingExpense);
     }
-}
 
-//TODO add docstrings
+    /**
+     * Deletes an expense associated with the specified expense UUID.
+     * @param expenseId The unique identifier (UUID) of the expense to be deleted.
+     */
+    public void deleteExpense(UUID expenseId){
+        Expense expense = expenseRepository.findById(expenseId).orElseThrow();
+        Budget budget = expense.getBudget();
+        budget.setBalance(budget.getBalance() + expense.getPrice());
+        budgetRepository.save(budget);
+        expenseRepository.delete(expense);
+
+    }
+}
