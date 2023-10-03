@@ -21,7 +21,7 @@ import java.util.Objects;
 public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<APIResponse<String>> handleUserAlreadyExistExceptions(DoesNotExistException ex){
+    public ResponseEntity<APIResponse<String>> handleUserAlreadyExistExceptions(UserAlreadyExistsException ex){
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(new APIResponse<>(ex.getMessage(), "error"));
