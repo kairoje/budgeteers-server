@@ -38,12 +38,6 @@ public class ExpenseController {
     static HashMap<String, Object> result = new HashMap<>();
     static HashMap<String, Object> message = new HashMap<>();
 
-    //HELLO WORLD
-    @GetMapping(path = "/hello-world")
-    public String helloWorld() {
-        return "hello World";
-    }
-
     //GET ALL
     @GetMapping(path = "/{budgetId}/expenses") //http://localhost:4000/api/v1/budgets/1/expenses
     public ResponseEntity<?> getExpenses(@PathVariable(value = "budgetId") UUID budgetId) {

@@ -56,15 +56,6 @@ public class ExpenseControllerTest {
         EXPENSE_3 = new Expense(UUID.randomUUID(), "exp3", "description3", 98.32, budget1);
     }
 
-    //HELLO WORLD
-    @Test
-    public void shouldReturnHelloWorld_success() throws Exception {
-        mockMvc.perform(get("/api/v1/budgets/hello-world"))
-                .andExpect(MockMvcResultMatchers.content().string("hello World"))
-                .andExpect(status().isOk()) //expect ok status
-                .andDo(print());
-    }
-
     //GET ALL
     @Test
     public void getExpenses_success() throws Exception {
