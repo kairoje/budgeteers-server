@@ -38,7 +38,7 @@ public class ExpenseService extends ApplicationService {
 
     //GET ALL
     public List<Expense> getExpenses(UUID budgetId) {
-        return expenseRepository.findAllById(budgetId);
+        return expenseRepository.findAllByBudget_Id(budgetId);
     }
 
     //GET ONE
