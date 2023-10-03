@@ -52,4 +52,30 @@ class ExpenseServiceTest {
         Authentication authentication = new UsernamePasswordAuthenticationToken(authUserDetails, null, Collections.emptyList());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
+
+
+
+    @Test
+    void testGetExpenses() {
+        // Prepare test data
+        UUID budgetId = budget.getId();
+        List<Expense> expectedExpenses = List.of(
+                new Expense(UUID.randomUUID(), "Expense1", "Expense1 description", 100.0, budget),
+                new Expense(UUID.randomUUID(), "Expense2", "Expense2 description", 200.0,budget)
+        );
+
+        // Stub the behavior of expenseRepository to return the expected expenses
+        when(expenseRepository.findByBudget_Id(budgetId)).thenReturn(expectedExpenses);
+
+        // Call the method to be tested
+        List<Expense> retrievedExpenses = expenseService.getExpenses(budgetId);
+
+        // Verify that the returned expenses match the expected expenses
+        assertEquals(expectedExpenses, retrievedExpenses);
+
+        // Verify that no more interactions with the repository occurred
+        verifyNoMoreInteractions(expenseRepository);
+    }
+
+
 }
