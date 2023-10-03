@@ -77,5 +77,32 @@ class ExpenseServiceTest {
         verifyNoMoreInteractions(expenseRepository);
     }
 
+    @Test
+    void testCreateExpense() {
+        // Prepare test data
+        UUID budgetId = UUID.randomUUID();
+        Budget budget = new Budget(budgetId, 1000.0, LocalDate.now(), authUserDetails.getUser());
+        Expense expenseObject = new Expense(UUID.randomUUID(), "ExpenseName", "Expense description",  500.0,budget);
+
+        // Stub the behavior of budgetRepository to return the budget when findById is called
+        when(budgetRepository.findById(budgetId)).thenReturn(Optional.of(budget));
+
+        // Call the method to be tested
+        expenseService.createExpense(budgetId, expenseObject);
+
+        // Verify that budget balance is updated correctly
+        assertEquals(500.0, budget.getBalance());
+
+        // Verify that budgetRepository.save is called to save the updated budget
+        verify(budgetRepository).save(budget);
+
+        // Verify that expenseRepository.save is called to save the expense
+        verify(expenseRepository).save(expenseObject);
+
+        // Verify that no more interactions with the repositories occurred
+        verifyNoMoreInteractions(budgetRepository);
+        verifyNoMoreInteractions(expenseRepository);
+    }
+
 
 }
