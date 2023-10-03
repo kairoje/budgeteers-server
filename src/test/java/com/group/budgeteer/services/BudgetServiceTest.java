@@ -20,6 +20,7 @@ import java.time.Month;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -92,6 +93,32 @@ class BudgetServiceTest {
         verifyNoMoreInteractions(budgetRepository);
     }
 
+    @Test
+    void testGetBudget() {
+        //Given
+        Budget budget = new Budget(
+                UUID.randomUUID(),
+                4000.00,
+                LocalDate.of(2023, 3, 1),
+                authUserDetails.getUser()
+        );
+        // Mock the behavior of budgetRepository.findById
+        when(budgetRepository.findById(budget.getId())).thenReturn(Optional.of(budget));
+
+        // When
+        Budget result = budgetService.getBudget(budget.getId());
+
+        // Then
+        assertNotNull(result);
+        assertEquals(budget, result);
+
+        // Then
+        ArgumentCaptor<UUID> budgetArgument = ArgumentCaptor.forClass(UUID.class);
+        verify(budgetRepository).findById(budgetArgument.capture());
+        UUID capturedId = budgetArgument.getValue();
+        assertEquals(capturedId, budget.getId());
+        verifyNoMoreInteractions(budgetRepository);
+    }
 
 
 }
