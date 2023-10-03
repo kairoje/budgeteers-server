@@ -6,9 +6,11 @@ import com.group.budgeteer.repositories.BudgetRepository;
 import com.group.budgeteer.security.AuthUserDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,13 +27,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class BudgetServiceTest {
 
-    @InjectMocks
+    @Mock
     private  BudgetRepository budgetRepository;
 
-    @Mock
+    @InjectMocks
     private BudgetService budgetService;
 
     private static final UUID userId = UUID.randomUUID();
@@ -42,12 +44,9 @@ class BudgetServiceTest {
         authUserDetails = new AuthUserDetails(
                 new User(userId, "tester@test.com", "John", "Doe", "password")
         );
-
         // Create a mock Authentication object and set it in the SecurityContext
-
         Authentication authentication = new UsernamePasswordAuthenticationToken(authUserDetails, null, Collections.emptyList());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
     }
 
     @Test
@@ -58,7 +57,6 @@ class BudgetServiceTest {
         List<Budget> expectedBudgets = List.of(budget1, budget2);
 
         // Stub the behavior of budgetRepository to return the expected budgets
-
         when(budgetRepository.findByUser_Id(authUserDetails.getUser().getId())).thenReturn(Optional.of(expectedBudgets));
 
         // Call the method to be tested

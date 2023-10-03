@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,10 +38,11 @@ public class BudgetController {
     @PostMapping
     public ResponseEntity<APIResponse<Budget>> createBudget(@Valid @RequestBody Budget budgetObject) {
         return ResponseEntity
-                .ok(new APIResponse<>(budgetService.createBudget(budgetObject), "success"));
+                .created(URI.create("/api/v1/budgets"))
+                .body(new APIResponse<>(budgetService.createBudget(budgetObject), "success"));
     }
 
-    @PutMapping("/budgets")
+    @PutMapping()
     public ResponseEntity<APIResponse<Budget>> updateBudget(@Valid @RequestBody Budget budgetObject) {
         return ResponseEntity
                 .ok(new APIResponse<>(budgetService.updateBudget(budgetObject), "success"));
