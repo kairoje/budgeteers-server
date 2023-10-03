@@ -75,4 +75,14 @@ class BudgetControllerTest {
                 .andExpect(jsonPath("$.data[1].balance").value(4000.00))
                 .andExpect(jsonPath("$.data[2].balance").value(3000.00));
     }
+
+    @Test
+    void getBudget_success() throws Exception {
+        when(budgetService.getBudget(bud1.getId())).thenReturn(bud1);
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/budgets/" + bud1.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.balance").value(5000.00));
+    }
+
 }
