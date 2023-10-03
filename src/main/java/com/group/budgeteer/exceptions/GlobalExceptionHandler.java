@@ -19,6 +19,13 @@ import java.util.Objects;
 @ControllerAdvice
 @RestController
 public class GlobalExceptionHandler {
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<APIResponse<String>> handleUserAlreadyExistExceptions(DoesNotExistException ex){
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(new APIResponse<>(ex.getMessage(), "error"));
+    }
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(DoesNotExistException.class)
     public ResponseEntity<APIResponse<String>> handleDoesNotExistExceptions(DoesNotExistException ex){
