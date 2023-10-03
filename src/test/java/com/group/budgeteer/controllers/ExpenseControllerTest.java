@@ -1,4 +1,4 @@
-package com.group.budgeteer;
+package com.group.budgeteer.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.group.budgeteer.models.Budget;
