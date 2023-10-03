@@ -2,9 +2,23 @@
 
 Budgeteer is a budget app designed to allow people to take control of their finances. With Budgeteer, users can create custom budget categories and add expenses to these categories, allowing them to  monitor their income, expenses, and financial goals.
 
+# Planning and Approach
+- The first day of the project was spent planning. We began by creating user stories, an ERD, and listing our endpoints out. We knew that we wanted to configure our security first before creating our models and classes. Therefore, most of the next day was spent with security configuration together using a driver/navigator method. The next 2 days were the most challenging days and were spent configuring our test classes and ensuring they ran seamlessly.
+- To keep merge conflicts minimal, we divided the workload by classes, and each morning we would resolve pull requests and merge conflicts together to ensure we started the day with no merge conflicts. This approach worked in our favor and we were able to keep merge conflicts to a minimum.
+
+### Budgeteer ERD
+![ERD.png](ERD.png)
+
+### Endpoints
+![Endpoints](budgeteer-endpoints.png)
+
+# Hurdles
+- **Test classes:** Creating our testing classes took us about 4 days (including the weekend). We had a mixture of highly experienced and less experienced teammates, so it was important to allow the less experienced teammates to use this project to strengthen their weaker areas, and to learn to lean on more senior teammates for support and assistance in debugging.
+- **Merge conflicts:** We encountered a couple of merge conflicts but due to how we divided our workload, we were able to get them resolved relatively quickly.
+
 # User Stories
 
-## User Authentication
+### User Authentication
 
 **As a user**, I want to be able to create an account and log in so that I can access my budget and financial data.
 
@@ -12,7 +26,7 @@ Budgeteer is a budget app designed to allow people to take control of their fina
 - Users can register with a unique username and a secure password.
 - Registered users can log in using their username and password.
 
-## Managing Categories
+### Managing Categories
 
 **As a user**, I want to create a budget category so that I can categorize my expenses effectively.
 
@@ -45,7 +59,7 @@ Budgeteer is a budget app designed to allow people to take control of their fina
 - Users can delete a budget category.
 - Deletion of a category should not affect associated expenses.
 
-## Managing expenses
+### Managing expenses
 
 **As a user**, I want to add a budget expense to a specific category to track my expenses accurately.
 
@@ -77,8 +91,25 @@ Budgeteer is a budget app designed to allow people to take control of their fina
 - Users can delete a budget expense.
 - Deletion of an expense should not affect the category or other associated expenses.
 
-# Budgeteer ERD
-![ERD.png](ERD.png)
+
+
+# Tools and Technologies Used
+- Java
+- Springboot
+- Postman
+- H2
+- PostGres
+
+# Dependencies
+- [Springboot](https://spring.io/projects/spring-boot)
+- [Lombok](https://projectlombok.org/)
+- [Mockito](https://site.mockito.org/)
+- [JUnit](https://junit.org/junit5/)
+
+# Contributors
+- [Kairo Evans](https://github.com/kairoje)
+- [Julian Smith](https://github.com/jayastronomic)
+- [Elizabeth Yang](https://github.com/lizabawa)
 
 
 
