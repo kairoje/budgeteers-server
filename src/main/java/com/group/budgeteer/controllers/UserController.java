@@ -22,7 +22,6 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    //@Valid performs validation
     public ResponseEntity<APIResponse<String>> create(@Valid @RequestBody User userObject){
         return ResponseEntity
                 .ok(new APIResponse<>(userService.create(userObject), "success"));
@@ -33,9 +32,4 @@ public class UserController {
         return ResponseEntity
                 .ok(new APIResponse<>(userService.login(userObject), "success"));
     }
-
-//    @GetMapping
-//    public List<User> test(){
-//        return userService.test();
-//    }
 }

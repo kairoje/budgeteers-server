@@ -28,7 +28,6 @@ public class BudgetController {
                 .ok(new APIResponse<>(budgetService.getBudgets(), "success"));
     }
 
-  
     @GetMapping("/{budgetId}")
     public ResponseEntity<APIResponse<Budget>> getBudget(@PathVariable( value = "budgetId") UUID budgetId){
         return ResponseEntity
@@ -56,3 +55,4 @@ public class BudgetController {
                 .body(new APIResponse<>(null, "success"));
     }
 }
+//TODO add docstring
