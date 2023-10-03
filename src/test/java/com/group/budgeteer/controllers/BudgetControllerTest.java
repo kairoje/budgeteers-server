@@ -64,4 +64,15 @@ class BudgetControllerTest {
         bud2 = new Budget(UUID.randomUUID(),4000.00, LocalDate.of(2023, 10, 1), user);
         bud3 = new Budget(UUID.randomUUID(), 3000.00, LocalDate.of(2023, 11, 1), user);
     }
+
+    @Test
+    void getBudgets_success() throws Exception {
+        when(budgetService.getBudgets()).thenReturn(List.of(bud1, bud2, bud3));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/budgets")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data[0].balance").value(5000.00))
+                .andExpect(jsonPath("$.data[1].balance").value(4000.00))
+                .andExpect(jsonPath("$.data[2].balance").value(3000.00));
+    }
 }
