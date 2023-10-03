@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: com.group.budgeteer.controllers.BudgetControllerTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.387 s <<< FAILURE! - in com.group.budgeteer.controllers.BudgetControllerTest
+updateBudget_success  Time elapsed: 0.01 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<405>
+	at com.group.budgeteer.controllers.BudgetControllerTest.updateBudget_success(BudgetControllerTest.java:115)
+
+createBudget_success  Time elapsed: 0.014 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<201> but was:<200>
+	at com.group.budgeteer.controllers.BudgetControllerTest.createBudget_success(BudgetControllerTest.java:97)
+
