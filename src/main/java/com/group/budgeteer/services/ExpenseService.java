@@ -1,5 +1,6 @@
 package com.group.budgeteer.services;
 
+import com.group.budgeteer.exceptions.DoesNotExistException;
 import com.group.budgeteer.models.Budget;
 import com.group.budgeteer.models.Expense;
 import com.group.budgeteer.repositories.BudgetRepository;
@@ -16,8 +17,6 @@ import java.util.logging.Logger;
  */
 @Service
 public class ExpenseService extends ApplicationService {
-    Logger logger = Logger.getLogger(ExpenseService.class.getName());
-
     private final ExpenseRepository expenseRepository;
     private final BudgetRepository budgetRepository;
 
@@ -40,8 +39,10 @@ public class ExpenseService extends ApplicationService {
      * @param budgetId The unique identifier (UUID) of the budget for which expenses are to be retrieved.
      * @return A list of expenses associated with the specified budget.
      */
-    public List<Expense> getExpenses(UUID budgetId) {
-        return expenseRepository.findAllById(budgetId);
+    public List<Expense> getExpenses(UUID budgetId) throws DoesNotExistException {
+        return expenseRepository.findByBudget_Id(budgetId).orElseThrow(
+                () -> new DoesNotExistException(Budget.class, budgetId)
+        );
     }
 
     /**
@@ -50,13 +51,14 @@ public class ExpenseService extends ApplicationService {
      * @param expenseObject The expense object containing details of the new expense.
      * @return The expense object that was created.
      */
-    public Expense createExpense(UUID budgetId, Expense expenseObject) {
-        Budget budget = budgetRepository.findById(budgetId).orElseThrow();
+    public Expense createExpense(UUID budgetId, Expense expenseObject) throws DoesNotExistException {
+        Budget budget = budgetRepository.findById(budgetId).orElseThrow(
+                () -> new DoesNotExistException(Budget.class, budgetId)
+        );
         budget.setBalance(budget.getBalance() - expenseObject.getPrice());
         expenseObject.setBudget(budget);
         budgetRepository.save(budget);
         return expenseRepository.save(expenseObject);
-
     }
 
     /**
@@ -82,11 +84,12 @@ public class ExpenseService extends ApplicationService {
      * @param expenseId The unique identifier (UUID) of the expense to be deleted.
      */
     public void deleteExpense(UUID expenseId){
-        Expense expense = expenseRepository.findById(expenseId).orElseThrow();
+        Expense expense = expenseRepository.findById(expenseId).orElseThrow(
+                () -> new DoesNotExistException(Expense.class, expenseId)
+        );
         Budget budget = expense.getBudget();
         budget.setBalance(budget.getBalance() + expense.getPrice());
         budgetRepository.save(budget);
         expenseRepository.delete(expense);
-
     }
 }

@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * The User class represents a User Entity in the application.
@@ -57,6 +58,18 @@ public class User extends ApplicationEntity<User> {
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Budget> budgets;
+
+    public User(UUID id, String email, String firstName, String lastName, String password) {
+        super(id);
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+    }
+
+    public User(UUID id) {
+        super(id);
+    }
 
     @Override
    public User update(User payload) {

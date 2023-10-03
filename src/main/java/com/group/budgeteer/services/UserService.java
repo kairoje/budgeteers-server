@@ -22,8 +22,6 @@ import java.util.logging.Logger;
  */
 @Service
 public class UserService extends ApplicationService{
-    Logger logger = Logger.getLogger(UserService.class.getName());
-
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JWTUtils jwtUtils;
@@ -52,17 +50,12 @@ public class UserService extends ApplicationService{
      * @return A JWT token representing the newly created user's authentication.
      * @throws UserAlreadyExistsException If a user with the same email already exists in the system.
      */
-    public String create(User userObject){
+    public String create(User userObject) throws UserAlreadyExistsException {
         boolean exists = userRepository.existsByEmail(userObject.getEmail());
-
-        if (exists){
-            throw new UserAlreadyExistsException("User with email " + userObject.getEmail() + " already exists.");
-        }
-
+        if (exists) throw new UserAlreadyExistsException("User already exist with id: " + userObject.getId());
         userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
         String jwt = jwtUtils.generateJwtToken(new AuthUserDetails(userObject));
         userRepository.save(userObject);
-
         return jwt;
     }
 
@@ -74,7 +67,7 @@ public class UserService extends ApplicationService{
      * @return The authenticated user's details and a JWT token.
      * @throws RuntimeException If the authentication fails due to invalid email or password.
      */
-    public User login(User payload) {
+    public User login(User payload)  {
         UsernamePasswordAuthenticationToken authenticationToken = new
                 UsernamePasswordAuthenticationToken(payload.getEmail(), payload.getPassword());
         try {
@@ -86,9 +79,5 @@ public class UserService extends ApplicationService{
         } catch (Exception e) {
             throw new RuntimeException("Invalid email/password");
         }
-    }
-
-    public List<User> test(){
-        return userRepository.findAll();
     }
 }
