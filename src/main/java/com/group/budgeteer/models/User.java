@@ -55,7 +55,6 @@ public class User extends ApplicationEntity<User> {
     @NotBlank(message = "Password cannot be blank")
     private String password;
 
-
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Budget> budgets;

@@ -27,7 +27,8 @@ public class BudgetRepositoryTest {
     @Autowired
     UserRepository userRepository;
 
-    User user = new User();
+//    User user = new User("sampleuser@example.com", "John", "Doe", "password123", null, null);
+User user = new User();
 
     LocalDate date = LocalDate.of(2023, Month.OCTOBER, 1);
 
