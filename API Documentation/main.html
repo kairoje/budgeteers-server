@@ -8,11 +8,11 @@
 <body>
     <main>
         <h1>Budgeteers API</h1>
-        <p>Description...</p>
+        <p id="api-desc">The Budgeteers API adheres to REST architectural principles, employing resource-oriented Uniform Resource Locators (URLs) to accept structured request payloads. It consistently returns JSON-encoded responses and follows the conventions of standard HTTP status codes. Additionally, it incorporates secure authentication mechanisms for user access.</p>
     </main>
 
     <div id="api-info">
-        <h3>HTTP Requests:</h3>
+        <h2>HTTP Requests:</h2>
         <ul id="http-requests">
             <li>PUT: To update a resource</li>
             <li>POST: To create a resource</li>
@@ -20,7 +20,7 @@
             <li>DELETE: To delete a resource</li>
         </ul>
 
-        <h3>Usual Server Responses:</h3>
+        <h2>Usual Server Responses:</h2>
         <ul id="server-responses">
             <li>200 <code>OK</code> - request was successful</li>
             <li>201 <code>Created</code> - request successful and resource created</li>
@@ -28,11 +28,24 @@
             <li>403 <code>Forbidden</code> - access denied</li>
         </ul>
 
-        <h3>User Auth</h3>
-        <p>POST: For user registration <br>
-            This endpoint allows users to sign up by creating a new user account. The request should include a valid user object, and validation is performed using the @Valid annotation. Upon successful registration, it returns a success message along with the created user's information. <br><br>
-            test
+        <h2>User Auth</h2>
+        <p id="user-register">POST <code>(/api/v1/auth/signup)</code>: <br>
+            This endpoint allows users to sign up by creating a new user account. The request should include a valid user object, and validation is performed using the @Valid annotation. Upon successful registration, it returns a success message along with the created user's information. User registers with email as username, and a password (that is encoded). <br><br>
+            POST <code>(/api/v1/auth/login)</code>: <br>
+            This endpoint enables users to log in to their existing accounts. Users must provide their credentials in the request body as a user object. If the login is successful, it returns a success message along with the user's information.
         </p>
+
+        <code>
+            { <br>
+            "email": "example@example.com", <br>
+            "password": "password" <br>
+            }
+        </code>
+
+        <h2>User</h2>
+        <p id="user-model-desc">The User model serves as the representation of a user entity. It contains essential user information such as email, first name, last name, and password, along with relationships to budgets and expenses. Additionally, it includes functionality to update user information and adheres to validation constraints for data integrity.</p>
+
+        
 
     </div>
 
