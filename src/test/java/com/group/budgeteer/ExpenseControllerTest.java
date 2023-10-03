@@ -16,7 +16,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -24,7 +23,6 @@ import java.util.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -78,7 +76,6 @@ public class ExpenseControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .content(this.objectMapper.writeValueAsString(EXPENSE_1));
 
-        //once send button is clicked
         mockMvc.perform(mockRequest)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$", notNullValue()))
@@ -89,6 +86,7 @@ public class ExpenseControllerTest {
                 .andDo(print());
     }
 
+    //UPDATE
     @Test
     public void updateExpense_success() throws Exception {
         UUID expenseID = EXPENSE_1.getId();
@@ -112,6 +110,7 @@ public class ExpenseControllerTest {
                 .andDo(print());
     }
 
+    //DELETE
     @Test
     void deleteExpense_success() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
