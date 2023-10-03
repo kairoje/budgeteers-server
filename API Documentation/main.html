@@ -30,7 +30,7 @@
 
         <h2>User Auth</h2>
         <p id="user-register">POST <code>(/api/v1/auth/signup)</code>: <br>
-            This endpoint allows users to sign up by creating a new user account. The request should include a valid user object, and validation is performed using the @Valid annotation. Upon successful registration, it returns a success message along with the created user's information. User registers with email as username, and a password (that is encoded). <br><br>
+            This endpoint allows users to sign up by creating a new user account. The request should include a valid user object, and validation is performed using the @Valid annotation. Upon successful registration, it returns a success message along with the created user's information. User registers with email as username, and a password (that is encoded). Authorization identified using generated bearer token <br><br>
             POST <code>(/api/v1/auth/login)</code>: <br>
             This endpoint enables users to log in to their existing accounts. Users must provide their credentials in the request body as a user object. If the login is successful, it returns a success message along with the user's information.
         </p>
@@ -47,10 +47,39 @@
 
         <h4>User Attributes</h4>
         <ul>
-            <li>UUID<code>(String)</code>: Universally Unique Identifier</li>
             <li>firstName<code>(String)</code>: First Name</li>
             <li>lastName<code>(String)</code>: Last Name</li>
             <li>email<code>(String)</code>: Email(Username)</li>
+        </ul>
+
+        <h2>Budget</h2>
+        <p>The Budget model serves as the representation of a budget entity in the application's data structure. It maintains budget details such as the balance, date, and user association, along with a collection of expenses associated with this budget. Budgets are associated with users, and expenses linked to budgets are automatically removed when the budget is deleted. It enforces constraints such as a non-empty balance and mandatory date field for data integrity.</p>
+
+        <h4>Budget Attributes</h4>
+        <ul>
+            <li>balance<code>(Double)</code>: Balance</li>
+            <li>user<code>(User)</code>: User</li>
+            <li>expenses<code>(Expenses)</code>: Expenses</li>
+            <li>date<code>(LocalDate)</code>: Date(yyyy-MM-dd)</li>
+        </ul>
+
+        <p>GET <code>(/api/v1/budgets)</code>:<br>
+            This endpoint is retrieves a list of budgets, and user should expect a returned list and a successful response.<br><br>
+
+            POST <code>(/api/v1/budgets/{budgetId})</code>:<br>
+            This endpoint retrieves details of a specific budget by providing its unique identifier. It returns the details of the specified budget in a successful response.<br><br>
+
+        </p>
+
+        <h2>Expenses</h2>
+        <p>The Expense model serves as the representation of a expense entity in the application's data structure. It captures essential details of an expense, such as its name, description, and price, while also linking the expense to a specific budget. Expenses are part of a budget and can be associated with a description. This class ensures that expense details adhere to constraints such as non-blank names and a minimum price value for data integrity.</p>
+
+        <h4>Expense Attributes</h4>
+        <ul>
+            <li>name<code>(String)</code>: Name</li>
+            <li>description<code>(String)</code>: Description</li>
+            <li>price<code>(Double)</code>: Price</li>
+            <li>budget<code>(Budget)</code>: Budget</li>
         </ul>
 
     </div>

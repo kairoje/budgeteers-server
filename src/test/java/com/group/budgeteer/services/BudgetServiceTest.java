@@ -6,9 +6,11 @@ import com.group.budgeteer.repositories.BudgetRepository;
 import com.group.budgeteer.security.AuthUserDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,13 +27,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class BudgetServiceTest {
 
-    @InjectMocks
+    @Mock
     private  BudgetRepository budgetRepository;
 
-    @Mock
+    @InjectMocks
     private BudgetService budgetService;
 
     private static final UUID userId = UUID.randomUUID();
