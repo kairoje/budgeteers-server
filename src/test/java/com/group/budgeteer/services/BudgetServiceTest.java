@@ -163,4 +163,17 @@ class BudgetServiceTest {
     }
 
 
+    @Test
+    void testDeleteBudget() {
+        // Given
+        UUID budgetId = UUID.randomUUID();
+
+        // When
+        budgetService.deleteBudget(budgetId);
+
+        // Then
+        verify(budgetRepository, times(1)).deleteById(budgetId);
+        verifyNoMoreInteractions(budgetRepository);
+    }
+
 }
