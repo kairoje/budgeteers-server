@@ -19,6 +19,13 @@ import java.util.Objects;
 @ControllerAdvice
 @RestController
 public class GlobalExceptionHandler {
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(DoesNotExistException.class)
+    public ResponseEntity<APIResponse<String>> handleDoesNotExistExceptions(DoesNotExistException ex){
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new APIResponse<>(ex.getMessage(), "error"));
+    }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoSuchElementException.class)
