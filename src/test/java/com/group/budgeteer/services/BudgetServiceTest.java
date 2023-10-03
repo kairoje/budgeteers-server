@@ -120,5 +120,47 @@ class BudgetServiceTest {
         verifyNoMoreInteractions(budgetRepository);
     }
 
+    @Test
+    void testUpdateBudget() {
+        // Given
+        UUID budgetId = UUID.randomUUID();
+
+        Budget existingBudget = new Budget(
+                budgetId,
+                4000.00,
+                LocalDate.of(2023, 3, 1),
+                authUserDetails.getUser()
+        );
+
+        Budget updatedBudget = new Budget(
+                budgetId,
+                5000.00,
+                LocalDate.of(2023, 3, 1),
+                authUserDetails.getUser()
+        );
+
+        // Mock the behavior of budgetRepository.findById to return the existingBudget
+        when(budgetRepository.findById(budgetId)).thenReturn(Optional.of(existingBudget));
+
+        // Use doReturn(...) for stubbing budgetRepository.save
+        doReturn(updatedBudget).when(budgetRepository).save(any()); // Use any() to match any argument
+
+        // When
+        Budget result = budgetService.updateBudget(updatedBudget);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(updatedBudget, result);
+
+        // Verify that budgetRepository.findById was called with the correct budgetId
+        verify(budgetRepository).findById(budgetId);
+
+        // Verify that budgetRepository.save was called with any argument
+        verify(budgetRepository).save(any());
+
+        // Verify that there are no more interactions with budgetRepository
+        verifyNoMoreInteractions(budgetRepository);
+    }
+
 
 }
