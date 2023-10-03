@@ -101,4 +101,22 @@ class BudgetControllerTest {
                 .andExpect(jsonPath("$.data.date[1]").value(9))  // Month
                 .andExpect(jsonPath("$.data.date[2]").value(1));
     }
+
+    @Test
+    void updateBudget_success() throws Exception {
+        Budget update = new Budget(bud1.getId(), 4000.00, LocalDate.of(2023, 9, 1), user);
+        when(budgetService.updateBudget(any(Budget.class))).thenReturn(update);
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/api/v1/budgets")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(this.mapper.writeValueAsString(update));
+
+        mockMvc.perform(mockRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$.data.balance").value(4000.00))
+                .andExpect(jsonPath("$.data.date[0]").value(2023)) // Year
+                .andExpect(jsonPath("$.data.date[1]").value(9))  // Month
+                .andExpect(jsonPath("$.data.date[2]").value(1));
+    }
 }
