@@ -30,15 +30,15 @@
 
         <h2>User Auth</h2>
         <p id="user-register">POST <code>(/api/v1/auth/signup)</code>: <br>
-            This endpoint allows users to sign up by creating a new user account. The request should include a valid user object, and validation is performed using the @Valid annotation. Upon successful registration, it returns a success message along with the created user's information. User registers with email as username, and a password (that is encoded). Authorization identified using generated bearer token <br><br>
+            This endpoint allows users to sign up by creating a new user account. The request should include a valid user object, and validation is performed using the @Valid annotation. Upon successful registration, it returns a success message along with the created user's information. User registers with email as username, and a password (that is encoded). Authorization identified using generated bearer token. <br><br>
             POST <code>(/api/v1/auth/login)</code>: <br>
             This endpoint enables users to log in to their existing accounts. Users must provide their credentials in the request body as a user object. If the login is successful, it returns a success message along with the user's information.
         </p>
 
         <code>
             { <br>
-            "email": "example@example.com", <br>
-            "password": "password" <br>
+                &nbsp;&nbsp;&nbsp;"email": "example@example.com", <br>
+                &nbsp;&nbsp;&nbsp;"password": "password" <br>
             }
         </code>
 
@@ -66,9 +66,17 @@
         <p>GET <code>(/api/v1/budgets)</code>:<br>
             This endpoint is retrieves a list of budgets, and user should expect a returned list and a successful response.<br><br>
 
-            POST <code>(/api/v1/budgets/{budgetId})</code>:<br>
+            GET <code>(/api/v1/budgets/{budgetId})</code>:<br>
             This endpoint retrieves details of a specific budget by providing its unique identifier. It returns the details of the specified budget in a successful response.<br><br>
 
+            POST <code>(/api/v1/budgets)</code>:<br>
+            This endpoint handles creation of a new budget. It expects a valid budget object in the request body. Upon successful creation, it returns the newly created budget in a successful response.<br><br>
+
+            PUT <code>(/api/v1/budgets)</code>:<br>
+            This endpoint is used to update an existing budget. You should provide a valid budget object in the request body. After the update is performed, it returns the updated budget in a successful response.<br><br>
+
+            DELETE <code>(/api/v1/budgets/{budgetId})</code><br>
+            To delete a specific budget, use this endpoint and provide its unique identifier. Upon successful deletion, it returns a successful response with no content.
         </p>
 
         <h2>Expenses</h2>
@@ -81,6 +89,42 @@
             <li>price<code>(Double)</code>: Price</li>
             <li>budget<code>(Budget)</code>: Budget</li>
         </ul>
+
+        <p>GET <code>(/{budgetId}/expenses)</code>:<br>
+            This endpoint retrieves a list of expenses associated with a specific budget. Then returns a list of expenses if found, otherwise, returns a HTTP status code 404, indicating the resource is not found.<br><br>
+
+            POST <code>(/api/v1/budgets)</code>:<br>
+            This endpoint handles creation of a new expense associated with the specified budget. You should expect a valid expense object containing details of the new expense. Then returns a success message along with the newly created expense if successful; otherwise, it returns a customized error message.<br><br>
+
+            PUT <code>(/expenses)</code>:<br>
+            This endpoint updates an existing expense record with the provided expense object. You should expect a valid updated expense object containing updated expense data. Then returns a message indicating the status of the update operation and the updated expense if successful.<br><br>
+
+            DELETE <code>(/expenses/{expenseId})</code><br>
+            Delete an existing expense record by providing its unique identifier with this endpoint. Upon successful deletion, it returns a successful response with no content.
+        </p>
+
+        <h3>Logged in user output...</h3>
+        <p>Displayed below is an exmaple of the output expected for a successful creation of a user, their budget(s) & expense(s).</p>
+        <code>
+            {<br>
+                &nbsp;&nbsp;&nbsp;"data": {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"id": "79fdb232-de8c-4bbf-90f2-644da7b1d893",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"email": "johndoe@myemail.com",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"firstName": "John",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"lastName": "Doe",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"budgets": [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"balance": "5000.0",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"date": "2023, Month.OCTOBER, 03 ",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"expenses": [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name": "rent",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"price": "1800.0",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"description": "Monthly Rent"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>
+                &nbsp;&nbsp;&nbsp;},<br>
+                &nbsp;&nbsp;&nbsp;"message": "success"<br>
+            }
+        </code>
 
     </div>
 
