@@ -16,13 +16,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class BudgetServiceTest {
@@ -49,6 +47,29 @@ class BudgetServiceTest {
 
     }
 
+    @Test
+    void testGetAllBudgets() {
+        // Create some sample budgets
+        Budget budget1 = new Budget(UUID.randomUUID(), 1000.0, LocalDate.now(), authUserDetails.getUser());
+        Budget budget2 = new Budget(UUID.randomUUID(), 2000.0, LocalDate.now(),authUserDetails.getUser());
+        List<Budget> expectedBudgets = List.of(budget1, budget2);
+
+        // Stub the behavior of budgetRepository to return the expected budgets
+
+        when(budgetRepository.findByUser_Id(authUserDetails.getUser().getId())).thenReturn(Optional.of(expectedBudgets));
+
+        // Call the method to be tested
+        List<Budget> retrievedBudgets = budgetService.getBudgets();
+
+        // Verify that the repository method was called with the correct user ID
+        verify(budgetRepository).findByUser_Id(authUserDetails.getUser().getId());
+
+        // Verify that the returned budgets match the expected budgets
+        assertEquals(expectedBudgets, retrievedBudgets);
+
+        // Verify that no more interactions with the repository occurred
+        verifyNoMoreInteractions(budgetRepository);
+    }
 
 
 }
