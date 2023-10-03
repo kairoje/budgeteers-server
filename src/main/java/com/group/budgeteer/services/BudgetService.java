@@ -49,7 +49,7 @@ public class BudgetService extends ApplicationService {
      * @param budgetId The UUID of the budget to retrieve.
      * @return The budget object with the given UUID, or throws an exception if not found.
      */
-    public Budget getBudget(UUID budgetId) { return budgetRepository.findById(budgetId).orElseThrow(
+    public Budget getBudget(UUID budgetId) throws DoesNotExistException { return budgetRepository.findById(budgetId).orElseThrow(
             () -> new DoesNotExistException(Budget.class, budgetId)
     ); }
 
@@ -70,7 +70,7 @@ public class BudgetService extends ApplicationService {
      * @param budgetObject The updated budget object containing new data.
      * @return The updated budget object after saving it to the repository.
      */
-    public Budget updateBudget(Budget budgetObject) {
+    public Budget updateBudget(Budget budgetObject) throws DoesNotExistException {
         Budget budget = budgetRepository.findById(budgetObject.getId()).orElseThrow(
                 () -> new DoesNotExistException(Budget.class, budgetObject.getId())
         );

@@ -38,10 +38,14 @@ public class ExpenseService extends ApplicationService {
 
 
     //GET ALL
-    public List<Expense> getExpenses(UUID budgetId) {
-        return expenseRepository.findByBudget_Id(budgetId);
+    public List<Expense> getExpenses(UUID budgetId) throws DoesNotExistException {
+        return expenseRepository.findByBudget_Id(budgetId).orElseThrow(
+                () -> new DoesNotExistException(Budget.class, budgetId)
+        );
     }
 
+
+    @Deprecated
     //GET ONE
     public Expense getExpense(UUID budgetId, UUID expenseId) {
         Budget budget = budgetRepository.findById(budgetId).orElseThrow();
@@ -51,7 +55,7 @@ public class ExpenseService extends ApplicationService {
 
     //POST/CREATE
     //TODO Refactor as necessary
-    public Expense createExpense(UUID budgetId, Expense expenseObject) {
+    public Expense createExpense(UUID budgetId, Expense expenseObject) throws DoesNotExistException {
         Budget budget = budgetRepository.findById(budgetId).orElseThrow(
                 () -> new DoesNotExistException(Budget.class, budgetId)
         );
@@ -61,7 +65,7 @@ public class ExpenseService extends ApplicationService {
         return expenseRepository.save(expenseObject);
 
     }
-    public Expense deleteExpense(UUID expenseId){
+    public Expense deleteExpense(UUID expenseId) throws DoesNotExistException {
         Expense expense = expenseRepository.findById(expenseId).orElseThrow(
                 () -> new DoesNotExistException(Expense.class, expenseId)
         );
@@ -74,7 +78,7 @@ public class ExpenseService extends ApplicationService {
     }
 
     //PUT/UPDATE
-    public Expense updateExpense(Expense expenseObject) {
+    public Expense updateExpense(Expense expenseObject) throws DoesNotExistException {
         Expense existingExpense = expenseRepository.findById(expenseObject.getId()).orElseThrow(
                 () -> new DoesNotExistException(Expense.class, expenseObject.getId())
         );
