@@ -1,0 +1,111 @@
+body {
+    background-color: rgb(255, 254, 254);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    line-height: 1.5em;
+}
+
+#budgeteer-logo {
+    width: 165px;
+    z-index: 2;
+    position: fixed;
+    top: 3px;
+    left: 15px;
+}
+
+.sidenav {
+    height: 100%; 
+    width: 200px; 
+    position: fixed; 
+    top: 0; 
+    left: 0;
+    background-color: #252525; 
+    overflow-x: hidden; 
+    padding-top: 130px;
+    z-index: 1;
+  }
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #d1d1d1;
+    display: block;
+    z-index: 1;
+  }
+
+.sidenav a:hover {
+    color: #f1f1f1;
+    z-index: 1;
+  }
+
+#api-info {
+    margin: 50px 100px 50px 300px;
+  }
+
+#code-box {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px 20px; 
+    font-family: monospace; 
+    overflow-x: auto; 
+    max-width: 300px; 
+}
+
+#code-box2 {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px 40px;
+    font-family: monospace;
+    overflow-x: auto;
+    max-width: 400px;
+    text-align: start;
+}
+
+.tiny-box {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+main {
+    border-bottom: 1px solid black;
+    padding-bottom: 30px;
+}
+
+#rNr {
+    border-bottom: 1px solid black;
+    padding-bottom: 30px;
+    margin-top: 50px;
+}
+
+#user-auth-exmaple {
+    border-bottom: 1px solid black;
+    padding-bottom: 30px
+}
+
+#entities {
+    border-bottom: 1px solid black;
+    padding-bottom: 30px
+}
+
+#budget-title {
+    margin-top: 50px;
+}
+
+#user-title {
+    margin-top: 50px;
+}
+
+#user-auth{
+    margin-top: 50px;
+}
+
+#expenses-title {
+    margin-top: 50px;
+}
+
+#code_example {
+    margin-top: 50px;
+}
