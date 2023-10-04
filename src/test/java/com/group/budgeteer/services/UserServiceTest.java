@@ -4,6 +4,7 @@ import com.group.budgeteer.exceptions.UserAlreadyExistsException;
 import com.group.budgeteer.models.User;
 import com.group.budgeteer.repositories.UserRepository;
 import com.group.budgeteer.security.AuthUserDetails;
+import com.group.budgeteer.security.AuthUserDetailsService;
 import com.group.budgeteer.security.JWTUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +21,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,6 +45,10 @@ public class UserServiceTest {
 
     @Mock
     private AuthenticationManager authenticationManager;
+
+
+    @Mock
+    private AuthUserDetailsService authUserDetailsService;
 
     @BeforeEach
     public void setUp() {
@@ -80,13 +88,16 @@ public class UserServiceTest {
         assertThrows(UserAlreadyExistsException.class, () -> userService.create(user));
     }
 
+
     @Test
     public void testLoginUser_Success() {
         // Create a sample user object
         User user = new User(null, "testUser@gmail.com", "Tom", "Doe", "password");
 
         // Mock the behavior of authenticationManager and jwtUtils
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(null);
+        UserDetails userDetails = authUserDetailsService.loadUserByUsername(user.getEmail());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(authentication);
         when(jwtUtils.generateJwtToken(any(AuthUserDetails.class))).thenReturn("sampleJWTToken");
 
         // Call the login method
@@ -99,6 +110,7 @@ public class UserServiceTest {
         AuthUserDetails authUserDetails = (AuthUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         assertEquals(user.getEmail(), authUserDetails.getUsername());
     }
+
 
     @Test
     public void testLoginUser_InvalidCredentials() {
