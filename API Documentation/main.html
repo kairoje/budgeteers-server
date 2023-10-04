@@ -4,108 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API-Documentation</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main>
-        <h1>Budgeteers API</h1>
-        <p id="api-desc">The Budgeteers API adheres to REST architectural principles, employing resource-oriented Uniform Resource Locators (URLs) to accept structured request payloads. It consistently returns JSON-encoded responses and follows the conventions of standard HTTP status codes. Additionally, it incorporates secure authentication mechanisms for user access.</p>
-    </main>
+    <div>
+        <img id="budgeteer-logo" src="IMG_3105.PNG" alt="Budgeteer Logo">
+    </div>
+
+    <button id="dark-mode-toggle">Dark Mode</button>
+
+    <div class="sidenav">
+        <a href="#budgeteerApi">About</a>
+        <a href="#requests_responses">Requests & Responses</a>
+        <a href="#user-auth">User Auth</a>
+        <a href="#entities">Models</a>
+        <a href="#code_example">Example Output</a>
+    </div>
 
     <div id="api-info">
-        <h2>HTTP Requests:</h2>
-        <ul id="http-requests">
-            <li>PUT: To update a resource</li>
-            <li>POST: To create a resource</li>
-            <li>GET: To get a resource</li>
-            <li>DELETE: To delete a resource</li>
-        </ul>
+        <main>
+            <h1 id="budgeteerApi">Budgeteers API</h1>
+            <p id="api-desc">The Budgeteers API adheres to <strong>REST</strong> architectural principles, employing resource-oriented Uniform Resource Locators (URLs) to accept structured request payloads. It consistently returns JSON-encoded responses and follows the conventions of standard HTTP status codes. Additionally, it incorporates secure authentication mechanisms for user access.</p>
+        </main>
 
-        <h2>Usual Server Responses:</h2>
-        <ul id="server-responses">
-            <li>200 <code>OK</code> - request was successful</li>
-            <li>201 <code>Created</code> - request successful and resource created</li>
-            <li>401 <code>Unarthorized</code> - authentication failed or user doesn't have permissions for requested operation</li>
-            <li>403 <code>Forbidden</code> - access denied</li>
-        </ul>
+    
+        <div id="rNr">
+           <h2 id="requests_responses">HTTP Requests:</h2>
+            <ul id="http-requests">
+                <li><strong>PUT</strong>: To update a resource</li>
+                <li><strong>POST</strong>: To create a resource</li>
+                <li><strong>GET</strong>: To get a resource</li>
+                <li><strong>DELETE</strong>: To delete a resource</li>
+            </ul>
 
-        <h2>User Auth</h2>
-        <p id="user-register">POST <code>(/api/v1/auth/signup)</code>: <br>
+            <h2>Usual Server Responses:</h2>
+            <ul id="server-responses">
+            <li><strong>200</strong> <code class="tiny-box">OK</code> - request was successful</li>
+            <li><strong>201</strong> <code class="tiny-box">Created</code> - request successful and resource created</li>
+            <li><strong>401</strong> <code class="tiny-box">Unarthorized</code> - authentication failed or user doesn't have permissions for requested operation</li>
+            <li><strong>403</strong> <code class="tiny-box">Forbidden</code> - access denied</li>
+            </ul> 
+        </div>
+
+        <div id="user-auth-exmaple">
+           <h2 id="user-auth">User Auth</h2>
+            <p id="user-register">
+            <strong>POST</strong> <code class="tiny-box">(/api/v1/auth/signup)</code>: <br>
             This endpoint allows users to sign up by creating a new user account. The request should include a valid user object, and validation is performed using the @Valid annotation. Upon successful registration, it returns a success message along with the created user's information. User registers with email as username, and a password (that is encoded). Authorization identified using generated bearer token. <br><br>
-            POST <code>(/api/v1/auth/login)</code>: <br>
+
+            <strong>POST</strong> <code class="tiny-box">(/api/v1/auth/login)</code>: <br>
             This endpoint enables users to log in to their existing accounts. Users must provide their credentials in the request body as a user object. If the login is successful, it returns a success message along with the user's information.
-        </p>
+            </p>
 
-        <code>
-            { <br>
-                &nbsp;&nbsp;&nbsp;"email": "example@example.com", <br>
-                &nbsp;&nbsp;&nbsp;"password": "password" <br>
-            }
-        </code>
+            <div id="code-box">
+               <code id="login_example">
+                    { <br>
+                    &nbsp;&nbsp;&nbsp;"email": "example@example.com", <br>
+                    &nbsp;&nbsp;&nbsp;"password": "password" <br>
+                    }
+               </code>  
+            </div>
+            
+        </div>
+        
+        <div id="entities">
+           <h2 id="user-title" id="models">User</h2>
+            <p id="user-model-desc">The User model serves as the representation of a user entity. It contains essential user information such as email, first name, last name, and password, along with relationships to budgets and expenses. Additionally, it includes functionality to update user information and adheres to validation constraints for data integrity.</p>
 
-        <h2>User</h2>
-        <p id="user-model-desc">The User model serves as the representation of a user entity. It contains essential user information such as email, first name, last name, and password, along with relationships to budgets and expenses. Additionally, it includes functionality to update user information and adheres to validation constraints for data integrity.</p>
+            <h4>User Attributes</h4>
+            <ul>
+                <li>firstName<code class="tiny-box">(String)</code>: First Name</li>
+                <li>lastName<code class="tiny-box">(String)</code>: Last Name</li>
+                <li>email<code class="tiny-box">(String)</code>: Email(Username)</li>
+            </ul>
 
-        <h4>User Attributes</h4>
-        <ul>
-            <li>firstName<code>(String)</code>: First Name</li>
-            <li>lastName<code>(String)</code>: Last Name</li>
-            <li>email<code>(String)</code>: Email(Username)</li>
-        </ul>
+            <h2 id="budget-title">Budget</h2>
+            <p>The Budget model serves as the representation of a budget entity in the application's data structure. It maintains budget details such as the balance, date, and user association, along with a collection of expenses associated with this budget. Budgets are associated with users, and expenses linked to budgets are automatically removed when the budget is deleted. It enforces constraints such as a non-empty balance and mandatory date field for data integrity.</p>
 
-        <h2>Budget</h2>
-        <p>The Budget model serves as the representation of a budget entity in the application's data structure. It maintains budget details such as the balance, date, and user association, along with a collection of expenses associated with this budget. Budgets are associated with users, and expenses linked to budgets are automatically removed when the budget is deleted. It enforces constraints such as a non-empty balance and mandatory date field for data integrity.</p>
+            <h4>Budget Attributes</h4>
+            <ul>
+                <li>balance<code class="tiny-box">(Double)</code>: Balance</li>
+                <li>user<code class="tiny-box">(User)</code>: User</li>
+                <li>expenses<code class="tiny-box">(Expenses)</code>: Expenses</li>
+                <li>date<code class="tiny-box">(LocalDate)</code>: Date(yyyy-MM-dd)</li>
+            </ul>
 
-        <h4>Budget Attributes</h4>
-        <ul>
-            <li>balance<code>(Double)</code>: Balance</li>
-            <li>user<code>(User)</code>: User</li>
-            <li>expenses<code>(Expenses)</code>: Expenses</li>
-            <li>date<code>(LocalDate)</code>: Date(yyyy-MM-dd)</li>
-        </ul>
-
-        <p>GET <code>(/api/v1/budgets)</code>:<br>
+            <p>
+            <strong>GET</strong> <code class="tiny-box">(/api/v1/budgets)</code>:<br>
             This endpoint is retrieves a list of budgets, and user should expect a returned list and a successful response.<br><br>
 
-            GET <code>(/api/v1/budgets/{budgetId})</code>:<br>
+            <strong>GET</strong> <code class="tiny-box">(/api/v1/budgets/{budgetId})</code>:<br>
             This endpoint retrieves details of a specific budget by providing its unique identifier. It returns the details of the specified budget in a successful response.<br><br>
 
-            POST <code>(/api/v1/budgets)</code>:<br>
+            <strong>POST</strong> <code class="tiny-box">(/api/v1/budgets)</code>:<br>
             This endpoint handles creation of a new budget. It expects a valid budget object in the request body. Upon successful creation, it returns the newly created budget in a successful response.<br><br>
 
-            PUT <code>(/api/v1/budgets)</code>:<br>
+            <strong>PUT</strong> <code class="tiny-box">(/api/v1/budgets)</code>:<br>
             This endpoint is used to update an existing budget. You should provide a valid budget object in the request body. After the update is performed, it returns the updated budget in a successful response.<br><br>
 
-            DELETE <code>(/api/v1/budgets/{budgetId})</code><br>
+            <strong>DELETE</strong> <code class="tiny-box">(/api/v1/budgets/{budgetId})</code>:<br>
             To delete a specific budget, use this endpoint and provide its unique identifier. Upon successful deletion, it returns a successful response with no content.
-        </p>
+            </p>
 
-        <h2>Expenses</h2>
-        <p>The Expense model serves as the representation of a expense entity in the application's data structure. It captures essential details of an expense, such as its name, description, and price, while also linking the expense to a specific budget. Expenses are part of a budget and can be associated with a description. This class ensures that expense details adhere to constraints such as non-blank names and a minimum price value for data integrity.</p>
+            <h2 id="expenses-title">Expenses</h2>
+            <p>The Expense model serves as the representation of a expense entity in the application's data structure. It captures essential details of an expense, such as its name, description, and price, while also linking the expense to a specific budget. Expenses are part of a budget and can be associated with a description. This class ensures that expense details adhere to constraints such as non-blank names and a minimum price value for data integrity.</p>
 
-        <h4>Expense Attributes</h4>
-        <ul>
-            <li>name<code>(String)</code>: Name</li>
-            <li>description<code>(String)</code>: Description</li>
-            <li>price<code>(Double)</code>: Price</li>
-            <li>budget<code>(Budget)</code>: Budget</li>
-        </ul>
+            <h4>Expense Attributes</h4>
+            <ul>
+                <li>name<code class="tiny-box">(String)</code>: Name</li>
+                <li>description<code class="tiny-box">(String)</code>: Description</li>
+                <li>price<code class="tiny-box">(Double)</code>: Price</li>
+                <li>budget<code class="tiny-box">(Budget)</code>: Budget</li>
+            </ul>
 
-        <p>GET <code>(/{budgetId}/expenses)</code>:<br>
+            <p>
+            <strong>GET</strong> <code class="tiny-box">(/{budgetId}/expenses)</code>:<br>
             This endpoint retrieves a list of expenses associated with a specific budget. Then returns a list of expenses if found, otherwise, returns a HTTP status code 404, indicating the resource is not found.<br><br>
 
-            POST <code>(/api/v1/budgets)</code>:<br>
+            <strong>POST</strong> <code class="tiny-box">(/api/v1/budgets)</code>:<br>
             This endpoint handles creation of a new expense associated with the specified budget. You should expect a valid expense object containing details of the new expense. Then returns a success message along with the newly created expense if successful; otherwise, it returns a customized error message.<br><br>
 
-            PUT <code>(/expenses)</code>:<br>
+            <strong>PUT</strong> <code class="tiny-box">(/expenses)</code>:<br>
             This endpoint updates an existing expense record with the provided expense object. You should expect a valid updated expense object containing updated expense data. Then returns a message indicating the status of the update operation and the updated expense if successful.<br><br>
 
-            DELETE <code>(/expenses/{expenseId})</code><br>
+            <strong>DELETE</strong> <code class="tiny-box">(/expenses/{expenseId})</code>:<br>
             Delete an existing expense record by providing its unique identifier with this endpoint. Upon successful deletion, it returns a successful response with no content.
-        </p>
-
-        <h3>Logged in user output...</h3>
-        <p>Displayed below is an exmaple of the output expected for a successful creation of a user, their budget(s) & expense(s).</p>
-        <code>
+            </p> 
+        </div>
+        
+        <div id="logged-in">
+        <h3 id="code_example">Logged in user output</h3>
+            <p>Displayed below is an exmaple of the output expected for a successful creation of a user, their budget(s) & expense(s).</p>
+        
+        <div id="code-box2">
+          <code>
             {<br>
                 &nbsp;&nbsp;&nbsp;"data": {<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"id": "79fdb232-de8c-4bbf-90f2-644da7b1d893",<br>
@@ -124,9 +156,16 @@
                 &nbsp;&nbsp;&nbsp;},<br>
                 &nbsp;&nbsp;&nbsp;"message": "success"<br>
             }
-        </code>
+         </code>  
+        </div>
+         
+        </div>
+        
 
     </div>
 
+    <link rel="stylesheet" href="dark-mode.css">
+    <script src="dark-mode.js"></script>
+    
 </body>
 </html>
