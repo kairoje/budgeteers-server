@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -34,32 +36,15 @@ public class ExpenseController {
     }
 
     /**
-     * Stores the results of a CRUD operation.
-     */
-    static HashMap<String, Object> result = new HashMap<>();
-
-    /**
-     * Stores the message related to a CRUD operation.
-     */
-    static HashMap<String, Object> message = new HashMap<>();
-
-    /**
      * Retrieves a list of expenses associated with the specified budget UUID.
      *
      * @param budgetId The budget ID for which expenses are to be retrieved.
      * @return A message and a list of expenses if found, or a message with a NOT_FOUND status if no expenses are found.
      */
     @GetMapping(path = "/{budgetId}/expenses")
-    public ResponseEntity<?> getExpenses(@PathVariable(value = "budgetId") UUID budgetId) {
-        List<Expense> expenses = expenseService.getExpenses(budgetId);
-        if (expenses.isEmpty()) {
-            message.put("message", "cannot find any expenses");
-            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
-        } else {
-            message.put("message", "success");
-            message.put("data", expenses);
-            return new ResponseEntity<>(message, HttpStatus.OK);
-        }
+    public ResponseEntity<APIResponse<List<Expense>>> getExpenses(@PathVariable(value = "budgetId") UUID budgetId) {
+        return ResponseEntity
+                .ok(new APIResponse<>(expenseService.getExpenses(budgetId), "success"));
     }
 
     /**
@@ -70,16 +55,10 @@ public class ExpenseController {
      * @return A message and the newly created expense if successful, or an error message with a status code.
      */
     @PostMapping(path = "/{budgetId}/expenses")
-    public ResponseEntity<?> createExpense(@PathVariable(value = "budgetId") UUID budgetId, @RequestBody Expense expenseObject) {
-        Expense newExpense = expenseService.createExpense(budgetId, expenseObject);
-        if (newExpense != null) {
-            message.put("message", "success");
-            message.put("data", newExpense);
-            return new ResponseEntity<>(message, HttpStatus.CREATED);
-        } else {
-            message.put("message", "unable to create an expense at this time");
-            return new ResponseEntity<>(message, HttpStatus.OK);
-        }
+    public ResponseEntity<APIResponse<Expense>> createExpense(@PathVariable(value = "budgetId") UUID budgetId,@Valid @RequestBody Expense expenseObject) {
+        return  ResponseEntity
+                .created(URI.create("/api/v1/budgets/" + budgetId + "/expenses"))
+                .body(new APIResponse<>(expenseService.createExpense(budgetId, expenseObject), "success"));
     }
 
     /**
@@ -90,7 +69,7 @@ public class ExpenseController {
      *         and the updated expense if successful.
      */
     @PutMapping(path = "/expenses")
-    public ResponseEntity<APIResponse<Expense>> updateExpense(@RequestBody Expense expenseObject) {
+    public ResponseEntity<APIResponse<Expense>> updateExpense(@Valid @RequestBody Expense expenseObject) {
         return ResponseEntity.ok(new APIResponse<>(expenseService.updateExpense(expenseObject), "success"));
     }
 
