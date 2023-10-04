@@ -2,6 +2,7 @@ package com.group.budgeteer.services;
 
 import com.group.budgeteer.exceptions.DoesNotExistException;
 import com.group.budgeteer.models.Budget;
+import com.group.budgeteer.models.User;
 import com.group.budgeteer.repositories.BudgetRepository;
 import com.group.budgeteer.repositories.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,9 @@ public class BudgetService extends ApplicationService {
      *
      * @return A list of budgets belonging to the current user.
      */
-    public List<Budget> getBudgets() { return currentUser().getBudgets(); }
+    public List<Budget> getBudgets() { return budgetRepository.findByUser_Id(currentUser().getId()).orElseThrow(
+            () -> new DoesNotExistException(User.class, currentUser().getId())
+    );}
 
     /**
      * Retrieves a specific budget by its unique identifier (UUID).
