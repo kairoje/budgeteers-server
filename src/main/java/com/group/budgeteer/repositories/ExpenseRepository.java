@@ -1,6 +1,5 @@
 package com.group.budgeteer.repositories;
 
-import com.group.budgeteer.models.Budget;
 import com.group.budgeteer.models.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

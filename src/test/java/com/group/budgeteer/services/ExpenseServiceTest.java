@@ -53,8 +53,6 @@ class ExpenseServiceTest {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
-
-
     @Test
     void testGetExpenses() {
         // Prepare test data

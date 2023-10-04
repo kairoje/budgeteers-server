@@ -1,6 +1,5 @@
 package com.group.budgeteer.services;
 
-import com.group.budgeteer.controllers.BudgetController;
 import com.group.budgeteer.exceptions.DoesNotExistException;
 import com.group.budgeteer.models.Budget;
 import com.group.budgeteer.repositories.BudgetRepository;
@@ -21,8 +20,6 @@ public class BudgetService extends ApplicationService {
     private final BudgetRepository budgetRepository;
 
     private final ExpenseRepository expenseRepository;
-
-    Logger logger = Logger.getLogger(BudgetService.class.getName()); //log messages related to the class
 
     /**
      * Constructor for BudgetService, adds instances of budget and expense repository to access & manipulate respective data.
@@ -76,7 +73,6 @@ public class BudgetService extends ApplicationService {
         );
         return budgetRepository.save(budget.update(budgetObject));
     }
-
 
     /**
      * Deletes a budget by its unique identifier (UUID).
