@@ -51,7 +51,7 @@ public class User extends ApplicationEntity<User> {
      * The password for user
      */
     @Column(nullable = false)
-    @JsonProperty (access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty
     @NotBlank(message = "Password cannot be blank")
     private String password;
 
@@ -66,9 +66,18 @@ public class User extends ApplicationEntity<User> {
         this.lastName = lastName;
         this.password = password;
     }
+    public User(String email, String firstName, String lastName, String password) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+    }
 
     public User(UUID id) {
         super(id);
+    }
+
+    public User(UUID uuid, String testUser) {
     }
 
     @Override

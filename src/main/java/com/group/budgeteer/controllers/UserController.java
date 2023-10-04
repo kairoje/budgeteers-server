@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -36,7 +37,8 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<APIResponse<String>> create(@Valid @RequestBody User userObject){
         return ResponseEntity
-                .ok(new APIResponse<>(userService.create(userObject), "success"));
+                .created(URI.create("/api/v1/auth/signup"))
+                .body(new APIResponse<>(userService.create(userObject), "success"));
     }
 
     /**
