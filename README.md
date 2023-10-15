@@ -102,6 +102,9 @@ As a user, I want to view a list of all expenses associated with a specific budg
 ### Endpoints
 ![Endpoints](endpoints.png)
 
+## Link to API Doc:
+https://kairoje.github.io/budgeteers-server-api-documentation/
+
 # Hurdles
 - **Test classes:** Creating our testing classes took us about 4 days (including the weekend). We had a mixture of highly experienced and less experienced teammates, so it was important to allow the less experienced teammates to use this project to strengthen their weaker areas, and to learn to lean on more senior teammates for support and assistance in debugging.<br><br>
 
